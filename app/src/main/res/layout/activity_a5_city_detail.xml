@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".A5CityDetail"
+    android:background="@drawable/main">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="8dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <Switch
+            android:id="@+id/swchToggleFav"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:minHeight="48dp"
+            android:text="@string/favourite" />
+
+        <include
+            android:id="@+id/tDetailWeather"
+            layout="@layout/general_time_detail_table" />
+
+        <include
+            android:id="@+id/llDetailNextDays"
+            layout="@layout/general_next_days" />
+
+        <include
+            android:id="@+id/llDetailMoreInfo"
+            layout="@layout/more_details_table" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="bottom|center_horizontal">
+
+            <Button
+                android:id="@+id/btnHistoricalData"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/historical_data"
+                android:backgroundTint="@android:color/darker_gray"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
