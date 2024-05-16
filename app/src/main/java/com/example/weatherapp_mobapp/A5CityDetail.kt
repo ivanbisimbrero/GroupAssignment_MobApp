@@ -22,11 +22,12 @@ class A5CityDetail : AppCompatActivity() {
             )
         )
     }
+    private lateinit var city: City
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(view.root)
         val name = intent.getStringExtra("cityName")
-        val city: City = DataUtils.mainUser.cities.find { it.name == name }!!
+        city = DataUtils.mainUser.cities.find { it.name == name }!!
         view.swchToggleFav.isChecked = city.isFavouriteCity
         view.swchToggleFav.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
@@ -48,5 +49,12 @@ class A5CityDetail : AppCompatActivity() {
         WeatherUtils.setTableValues(view.tDetailWeather, city, this)
         WeatherUtils.setNextDaysValues(view.llDetailNextDays, city)
         WeatherUtils.setMoreDetailsValues(view.llDetailMoreInfo, city)
+        WeatherUtils.setNextHoursValues(view.rvDetailNext24Hours, city, this)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        //For example if the hour changes (before: 12, after: 13), the adapter is updated
+        WeatherUtils.setNextHoursValues(view.rvDetailNext24Hours, city, this)
     }
 }

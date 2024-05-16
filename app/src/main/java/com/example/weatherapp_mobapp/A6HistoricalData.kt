@@ -10,6 +10,7 @@ import com.example.weatherapp_mobapp.weatherdb.DatabaseHelper
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
+import com.example.weatherapp_mobapp.formatter.DateAxisValueFormatter
 
 class A6HistoricalData : AppCompatActivity() {
 
@@ -21,7 +22,7 @@ class A6HistoricalData : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(view.root)
         cityName = intent.getStringExtra("cityName")!!
-        historicalUtils = HistoricalUtils(dbHandler.getAllCityForecasts(cityName))
+        historicalUtils = HistoricalUtils(dbHandler.getAllCityPastForecasts(cityName))
         historicalUtils.printInformation() //To check if works
         println("Average Temperature: ${historicalUtils.averageTemperature()}")
         println("Sunny Days: ${historicalUtils.countSunnyDays()}")
@@ -45,8 +46,20 @@ class A6HistoricalData : AppCompatActivity() {
         val chartMaxTemp = findViewById<LineChart>(R.id.chartMaxTemp)
         val boldTypeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
 
-        val entriesMin = historicalUtils.last15MinTemperatures()
-        val entriesMax = historicalUtils.last15MaxTemperatures()
+        val datesMin = historicalUtils.past15MinTemperatures().map { it.first }
+        val datesMax = historicalUtils.past15MaxTemperatures().map { it.first }
+        val entriesMin = historicalUtils.past15MinTemperatures().map { it.second }
+        val entriesMax = historicalUtils.past15MaxTemperatures().map { it.second }
+
+        val xAxisMin = chartMinTemp.xAxis
+        xAxisMin.valueFormatter = DateAxisValueFormatter(datesMin)
+        xAxisMin.granularity = 1f
+        val xAxisMax = chartMaxTemp.xAxis
+        xAxisMax.valueFormatter = DateAxisValueFormatter(datesMax)
+        xAxisMax.granularity = 1f
+
+        //For example, because both entries lists are going to have the same size
+        view.tvMaxMinChartsTxt.text = "Max and Min Past " + entriesMax.size + " Days Temperature:"
 
         // Configure the dataset for the minimum temperature
         val dataSetMin = LineDataSet(entriesMin, "Min Temperature")

@@ -29,23 +29,25 @@ class HistoricalUtils(private val forecasts: List<Forecast>) {
         return forecasts.map { it.precipprob }.average()
     }
 
-    fun last15MinTemperatures(): List<Entry> {
+    fun past15MinTemperatures(): List<Pair<String, Entry>> {
         return forecasts
             .groupBy { it.datetime }
             .mapValues { (_, values) -> values.minOf { it.tempmin } }
             .toList()
-            .sortedBy { it.first } // Asume que las fechas están en formato adecuado
-            .takeLast(15) // Tomar solo los últimos 15 registros
-            .mapIndexed { index, pair -> Entry(index.toFloat(), pair.second.toFloat()) }
+            .sortedBy { it.first }
+            .takeLast(15)
+            .mapIndexed { index, pair -> Pair(pair.first.substring(5), Entry(index.toFloat(), pair.second.toFloat())) }
     }
 
-    fun last15MaxTemperatures(): List<Entry> {
+    fun past15MaxTemperatures(): List<Pair<String, Entry>> {
         return forecasts
             .groupBy { it.datetime }
             .mapValues { (_, values) -> values.maxOf { it.tempmax } }
             .toList()
-            .sortedBy { it.first } // Asume que las fechas están en formato adecuado
-            .takeLast(15) // Tomar solo los últimos 15 registros
-            .mapIndexed { index, pair -> Entry(index.toFloat(), pair.second.toFloat()) }
+            .sortedBy { it.first }
+            .takeLast(15)
+            .mapIndexed { index, pair -> Pair(pair.first.substring(5), Entry(index.toFloat(), pair.second.toFloat())) }
     }
+
+
 }

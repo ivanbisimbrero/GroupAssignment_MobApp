@@ -5,6 +5,8 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import com.example.weatherapp_mobapp.model.Forecast
+import com.example.weatherapp_mobapp.model.Hour
+import java.time.LocalDate
 
 class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
     companion object {
@@ -78,7 +80,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         db.close()
     }
 
-    fun getAllCityForecasts(cityName: String) : List<Forecast> {
+    fun getAllCityPastForecasts(cityName: String) : List<Forecast> {
         val forecastList = ArrayList<Forecast>()
         val selectQuery = "SELECT * FROM $TABLE_FORECASTS WHERE $KEY_CITY = '$cityName'"
         val db = this.readableDatabase
@@ -95,13 +97,15 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
                     cursor.getDouble(8),
                     cursor.getDouble(9),
                     cursor.getString(10),
-                    cursor.getString(11)
+                    cursor.getString(11),
+                    mutableListOf() //We don't add the hours because we don't use it to calculate anything
                 )
                 forecastList.add(forecast)
             } while (cursor.moveToNext())
         }
         cursor.close()
-        return forecastList
+        //Return only the historical values of the forecasts or the current date
+        return forecastList.filter { LocalDate.parse(it.datetime) <= LocalDate.now() }
     }
 }
 

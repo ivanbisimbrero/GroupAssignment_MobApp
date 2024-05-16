@@ -18,7 +18,14 @@ class A2MainActivity : AppCompatActivity() {
         WeatherUtils.setTableValues(view.tCurrentWeather, DataUtils.mainUser.currentCity, this)
         WeatherUtils.setNextDaysValues(view.llNextDays, DataUtils.mainUser.currentCity)
         WeatherUtils.setMoreDetailsValues(view.llMoreDetails, DataUtils.mainUser.currentCity)
+        WeatherUtils.setNextHoursValues(view.rvNext24Hours, DataUtils.mainUser.currentCity, this)
         setButtonListeners()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        //For example if the hour changes (before: 12, after: 13), the adapter is updated
+        WeatherUtils.setNextHoursValues(view.rvNext24Hours, DataUtils.mainUser.currentCity, this)
     }
 
     private fun setButtonListeners() {

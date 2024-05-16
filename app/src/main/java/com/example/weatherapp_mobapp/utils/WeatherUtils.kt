@@ -1,11 +1,16 @@
 package com.example.weatherapp_mobapp.utils
 
 import android.content.Context
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.weatherapp_mobapp.databinding.GeneralNextDaysBinding
 import com.example.weatherapp_mobapp.databinding.GeneralTimeDetailTableBinding
 import com.example.weatherapp_mobapp.databinding.MoreDetailsTableBinding
 import com.example.weatherapp_mobapp.model.City
 import com.bumptech.glide.Glide
+import com.example.weatherapp_mobapp.adapter.HourAdapter
+import com.example.weatherapp_mobapp.databinding.ListNextHoursWeatherBinding
+import com.example.weatherapp_mobapp.model.Hour
+import java.time.LocalDateTime
 
 class WeatherUtils {
     companion object {
@@ -17,7 +22,7 @@ class WeatherUtils {
             tableBinding.tvMinValue.text = currentDay.tempmin.toString().plus("º")
             tableBinding.tvMaxValue.text = currentDay.tempmax.toString().plus("º")
             val baseIconUrl = "https://raw.githubusercontent.com/visualcrossing/WeatherIcons/main/PNG/4th%20Set%20-%20Color/"
-            val url = "$baseIconUrl${currentDay.icon}.png" // Construye la URL completa del icono
+            val url = "$baseIconUrl${currentDay.icon}.png" // Build the whole URL to the icon
             Glide.with(context)
                 .load(url)
                 .into(tableBinding.ivConditionIcon)
@@ -46,6 +51,48 @@ class WeatherUtils {
             moreDetailsTableBinding.tvRainProbValue.text = currentDay.precipprob.toString().plus("%")
             moreDetailsTableBinding.tvWindSpeedValue.text = currentDay.windspeed.toString().plus(" km/h")
         }
+
+        fun setNextHoursValues(listNextHoursWeatherBinding: ListNextHoursWeatherBinding, city: City,
+        context: Context) {
+            val next24Hours = getNext24Hours(city)
+            //Change the icon on the first hour to be the same that in the current forecast
+            next24Hours[0].icon = city.days[0].icon
+            //We change to the temperature, to be consistent in our predictions
+            next24Hours[0].temp = city.days[0].temp
+            println(next24Hours)
+            println()
+            listNextHoursWeatherBinding.rvHourlyForecast.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            val adapter = HourAdapter(next24Hours, context)
+            listNextHoursWeatherBinding.rvHourlyForecast.adapter = adapter
+        }
+
+        private fun getNext24Hours(city: City): List<Hour> {
+            val hoursList = mutableListOf<Hour>()
+            val currentTime = LocalDateTime.now()
+            val currentHour = currentTime.hour
+            var hoursNeeded = 24
+            var currentDayIndex = 0
+
+            while (hoursNeeded > 0 && currentDayIndex < city.days.size) {
+                val forecast = city.days[currentDayIndex]
+                // Filter out the times of the current day that are greater than or equal to the current time if it is the first day.
+                val relevantHours = if (currentDayIndex == 0) {
+                    forecast.hours.filter { it.datetime.substring(0, 2).toInt() >= currentHour }
+                } else {
+                    forecast.hours
+                }
+
+                for (hour in relevantHours) {
+                    if (hoursNeeded == 0) break
+                    hoursList.add(hour)
+                    hoursNeeded--
+                }
+                currentDayIndex++ // Move to the next day if more hours are still needed
+            }
+
+            return hoursList
+        }
+
     }
 
 }

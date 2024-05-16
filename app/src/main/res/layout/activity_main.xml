@@ -35,6 +35,10 @@
             layout="@layout/general_time_detail_table" />
 
         <include
+            android:id="@+id/rvNext24Hours"
+            layout="@layout/list_next_hours_weather" />
+
+        <include
             android:id="@+id/llNextDays"
             layout="@layout/general_next_days" />
 

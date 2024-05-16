@@ -10,5 +10,6 @@ data class Forecast (
     val precipprob: Double,
     val windspeed: Double,
     val conditions: String,
-    val icon: String
+    val icon: String,
+    val hours: List<Hour>
 )
