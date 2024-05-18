@@ -21,8 +21,6 @@ class DataUtils {
 
         const val API_KEY = "LRH7D4ZHU7LAWANGZBRQXPPGU" //Change if necessary
         const val REVERSE_API_KEY = "73ae2d27d6034e278eaae0007c703f28"
-        private const val USER_NAME = "ivanbisimbrero"
-        private const val USER_EMAIL = "alu.135046@usj.es"
 
         suspend fun fetchWeather(request: WeatherRequest): String {
             val client = HttpClient()
@@ -74,7 +72,7 @@ class DataUtils {
 
         fun initUser() {
             cities = citiesMap.values.toMutableList()
-            mainUser = User(USER_NAME, USER_EMAIL, currentCity, cities, mutableListOf())
+            mainUser = User("", "", currentCity, cities, mutableListOf())
             println(mainUser)
         }
 

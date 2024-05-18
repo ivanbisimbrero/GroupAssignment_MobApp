@@ -1,6 +1,7 @@
 package com.example.weatherapp_mobapp
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -23,6 +24,8 @@ class CityChatActivity : AppCompatActivity() {
     private lateinit var dbReference: DatabaseReference
     private lateinit var messageAdapter: MessageAdapter
     private var isEditing = false
+    private val sdf = SimpleDateFormat("dd-MM-yyyy HH:mm:ss")
+    private var currentInitDate = sdf.format(Date())
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(view.root)
@@ -47,8 +50,7 @@ class CityChatActivity : AppCompatActivity() {
 
         //Setup the buttons
         view.btnSend.setOnClickListener {
-            if(view.etMessages.text.toString().isNotEmpty()) run {
-                val sdf = SimpleDateFormat("dd-MM-yyyy HH:mm:ss")
+            if(view.etMessages.text.toString().isNotEmpty() && !haveEmptyUsernameAndEmail()) run {
                 val currentDate = sdf.format(Date())
                 println(currentDate)
                 val newMessageKey = dbReference.push().key!!
@@ -63,6 +65,8 @@ class CityChatActivity : AppCompatActivity() {
                 //And finally, we add it to our adapter
                 messageAdapter.insertNewMessage(message)
                 view.etMessages.setText("")
+            } else {
+                Toast.makeText(this, "Please, set up an email and username", Toast.LENGTH_SHORT).show()
             }
         }
         view.btnChange.setOnClickListener {
@@ -88,7 +92,10 @@ class CityChatActivity : AppCompatActivity() {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
                 val message = snapshot.getValue(Message::class.java)
                 if (message != null && message.id.isNotEmpty() && messageAdapter.messageList.none { it.id == message.id }) {
-                    messageAdapter.insertNewMessage(message)
+                    //If the hour of the message is greather than the initHour, we add the message
+                    if(message.hour > currentInitDate) {
+                        messageAdapter.insertNewMessage(message)
+                    }
                 }
             }
 
@@ -98,5 +105,14 @@ class CityChatActivity : AppCompatActivity() {
             override fun onCancelled(error: DatabaseError) {}
         })
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        currentInitDate = sdf.format(Date())
+    }
+
+    private fun haveEmptyUsernameAndEmail(): Boolean {
+        return DataUtils.mainUser.name.isEmpty() && DataUtils.mainUser.email.isEmpty()
     }
 }
