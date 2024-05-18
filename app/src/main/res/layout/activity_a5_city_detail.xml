@@ -54,7 +54,16 @@
                 android:id="@+id/btnHistoricalData"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="@string/historical_data"
+                android:backgroundTint="@android:color/darker_gray"/>
+
+            <Button
+                android:id="@+id/btnCityChat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Chat"
                 android:backgroundTint="@android:color/darker_gray"/>
         </LinearLayout>
 

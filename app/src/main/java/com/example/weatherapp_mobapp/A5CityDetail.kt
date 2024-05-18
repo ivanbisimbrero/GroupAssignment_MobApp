@@ -53,6 +53,12 @@ class A5CityDetail : AppCompatActivity() {
                 Toast.makeText(this, "There is no historical data", Toast.LENGTH_SHORT).show()
             }
         }
+        view.btnCityChat.setOnClickListener {
+            val intent = Intent(this, CityChatActivity::class.java).apply {
+                putExtra("cityName", city.name)
+            }
+            startActivity(intent)
+        }
         WeatherUtils.setTableValues(view.tDetailWeather, city, this)
         WeatherUtils.setNextDaysValues(view.llDetailNextDays, city)
         WeatherUtils.setMoreDetailsValues(view.llDetailMoreInfo, city)
