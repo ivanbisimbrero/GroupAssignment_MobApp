@@ -19,6 +19,9 @@
         android:theme="@style/Theme.WeatherAPP_MobAPP"
         tools:targetApi="31">
         <activity
+            android:name=".CityChatActivity"
+            android:exported="false" />
+        <activity
             android:name=".A6HistoricalData"
             android:exported="false" />
         <activity

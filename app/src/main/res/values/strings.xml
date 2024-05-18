@@ -21,4 +21,7 @@
     <string name="more_weather_information">More Weather Information</string>
     <string name="rain_probability">Rain Probability:</string>
     <string name="wind_speed">Wind Speed:</string>
+    <string name="send">Send</string>
+    <string name="change">Change</string>
+    <string name="message">message</string>
 </resources>
