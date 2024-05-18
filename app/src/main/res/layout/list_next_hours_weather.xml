@@ -10,7 +10,7 @@
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Next 24 Hours:"
+        android:text="@string/next_24_hours"
         android:textAlignment="center"
         android:textColor="#000000"
         android:textSize="16sp"

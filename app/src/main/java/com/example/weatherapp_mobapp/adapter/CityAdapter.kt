@@ -12,7 +12,7 @@ import com.example.weatherapp_mobapp.model.City
 import com.example.weatherapp_mobapp.sharedPreferences.CrudAPI
 import com.example.weatherapp_mobapp.utils.DataUtils
 
-class CityAdapter(context: Context, cities: List<City>, private val displayType: String,
+class CityAdapter(context: Context, private var cities: List<City>, private var displayType: String,
                   private val crudApi: CrudAPI
 ) : ArrayAdapter<City>(context, 0, cities) {
 
@@ -63,5 +63,10 @@ class CityAdapter(context: Context, cities: List<City>, private val displayType:
         } else {
             btnFavorite.setImageResource(R.drawable.ic_star_outline)  // Clear star icon
         }
+    }
+
+    fun updateDisplayType(displayType: String) {
+        this.displayType = displayType
+        notifyDataSetChanged()
     }
 }

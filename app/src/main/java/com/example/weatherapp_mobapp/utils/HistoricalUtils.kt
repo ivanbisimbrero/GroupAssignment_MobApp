@@ -5,10 +5,6 @@ import com.github.mikephil.charting.data.Entry
 
 class HistoricalUtils(private val forecasts: List<Forecast>) {
 
-    fun printInformation() {
-        println(forecasts.toString())
-    }
-
     fun averageTemperature(): Double {
         return forecasts.map { it.temp }.average()
     }

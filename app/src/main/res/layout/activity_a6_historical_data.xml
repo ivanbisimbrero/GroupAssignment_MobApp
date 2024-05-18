@@ -58,7 +58,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.2"
-                        android:text="Average Temperature:"
+                        android:text="@string/average_temperature"
                         android:textColor="#000000"
                         android:textStyle="bold" />
 
@@ -79,7 +79,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.2"
-                        android:text="Sunny Days Count:"
+                        android:text="@string/sunny_days_count"
                         android:textColor="#000000"
                         android:textStyle="bold" />
 
@@ -100,7 +100,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.2"
-                        android:text="Max Wind Speed:"
+                        android:text="@string/max_wind_speed"
                         android:textColor="#000000"
                         android:textStyle="bold" />
 
@@ -121,7 +121,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.2"
-                        android:text="Min Wind Speed:"
+                        android:text="@string/min_wind_speed"
                         android:textColor="#000000"
                         android:textStyle="bold" />
 
@@ -142,7 +142,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.2"
-                        android:text="Average Rain Probability:"
+                        android:text="@string/average_rain_probability"
                         android:textColor="#000000"
                         android:textStyle="bold" />
 

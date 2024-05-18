@@ -23,11 +23,6 @@ class A6HistoricalData : AppCompatActivity() {
         setContentView(view.root)
         cityName = intent.getStringExtra("cityName")!!
         historicalUtils = HistoricalUtils(dbHandler.getAllCityPastForecasts(cityName))
-        historicalUtils.printInformation() //To check if works
-        println("Average Temperature: ${historicalUtils.averageTemperature()}")
-        println("Sunny Days: ${historicalUtils.countSunnyDays()}")
-        println("Max Wind Speed: ${historicalUtils.maxWindSpeed()}")
-        println("Average Precipitation Probability: ${historicalUtils.averagePrecipitationProbability()}")
         setupHistoricalValues()
         setupCharts()
     }

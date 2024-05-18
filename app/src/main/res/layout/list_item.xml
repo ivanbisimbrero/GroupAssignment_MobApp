@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:background="?attr/selectableItemBackgroundBorderless"
-        android:contentDescription="Desc"
+        android:contentDescription="@string/desc"
         android:focusable="false"
         android:focusableInTouchMode="false"
         android:minWidth="48dp"

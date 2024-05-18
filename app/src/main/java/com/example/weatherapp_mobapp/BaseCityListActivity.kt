@@ -2,6 +2,7 @@ package com.example.weatherapp_mobapp
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Display
 import android.view.View
 import android.widget.ListView
 import android.widget.RadioGroup
@@ -18,6 +19,7 @@ abstract class BaseCityListActivity : AppCompatActivity() {
     abstract val cityUtils: SearchUtils
     private lateinit var listView: ListView
     private var displayType = CityAdapter.TEMPERATURE
+    private lateinit var adapter: CityAdapter
     private val repository: CrudAPI by lazy {
         SharedPreferencesRepository(
             application.getSharedPreferences(
@@ -53,7 +55,7 @@ abstract class BaseCityListActivity : AppCompatActivity() {
                     displayType = CityAdapter.CONDITION
                 }
             }
-            updateCityAdapter(cityUtils.getCities())
+            updateDisplayType(displayType)
         }
 
         listView.setOnItemClickListener { _, _, position, _ ->
@@ -71,8 +73,12 @@ abstract class BaseCityListActivity : AppCompatActivity() {
     }
 
     private fun updateCityAdapter(cities: List<City>) {
-        val adapter = CityAdapter(this, cities, displayType, repository)
+        adapter = CityAdapter(this, cities, displayType, repository)
         listView.adapter = adapter
+    }
+
+    private fun updateDisplayType(displayType: String) {
+        adapter.updateDisplayType(displayType)
     }
 
     abstract fun provideLayout(): View

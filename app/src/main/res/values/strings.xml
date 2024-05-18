@@ -6,4 +6,19 @@
     <string name="current_location">Current Location</string>
     <string name="favourite">Favourite</string>
     <string name="historical_data">Historical Data</string>
+    <string name="average_rain_probability">Average Rain Probability:</string>
+    <string name="average_temperature">Average Temperature:</string>
+    <string name="max_wind_speed">Max Wind Speed:</string>
+    <string name="min_wind_speed">Min Wind Speed:</string>
+    <string name="sunny_days_count">Sunny Days Count:</string>
+    <string name="condition">Condition</string>
+    <string name="precipitation">Precipitation</string>
+    <string name="temperature">Temperature</string>
+    <string name="desc">Desc</string>
+    <string name="next_24_hours">Next 24 Hours:</string>
+    <string name="feels_like">Feels Like:</string>
+    <string name="humidity">Humidity:</string>
+    <string name="more_weather_information">More Weather Information</string>
+    <string name="rain_probability">Rain Probability:</string>
+    <string name="wind_speed">Wind Speed:</string>
 </resources>

@@ -3,6 +3,7 @@ package com.example.weatherapp_mobapp
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import com.example.weatherapp_mobapp.databinding.ActivityA5CityDetailBinding
 import com.example.weatherapp_mobapp.model.City
 import com.example.weatherapp_mobapp.sharedPreferences.CrudAPI
@@ -10,6 +11,7 @@ import com.example.weatherapp_mobapp.sharedPreferences.SHARED_PREFERENCES_NAME
 import com.example.weatherapp_mobapp.sharedPreferences.SharedPreferencesRepository
 import com.example.weatherapp_mobapp.utils.DataUtils
 import com.example.weatherapp_mobapp.utils.WeatherUtils
+import com.example.weatherapp_mobapp.weatherdb.DatabaseHelper
 
 class A5CityDetail : AppCompatActivity() {
 
@@ -22,6 +24,7 @@ class A5CityDetail : AppCompatActivity() {
             )
         )
     }
+    private var dbHandler: DatabaseHelper = DatabaseHelper(this)
     private lateinit var city: City
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,10 +44,14 @@ class A5CityDetail : AppCompatActivity() {
             }
         }
         view.btnHistoricalData.setOnClickListener {
-            val intent = Intent(this, A6HistoricalData::class.java).apply {
-                putExtra("cityName", city.name)
+            if(dbHandler.getAllCityPastForecasts(city.name).size > 1){
+                val intent = Intent(this, A6HistoricalData::class.java).apply {
+                    putExtra("cityName", city.name)
+                }
+                startActivity(intent)
+            } else {
+                Toast.makeText(this, "There is no historical data", Toast.LENGTH_SHORT).show()
             }
-            startActivity(intent)
         }
         WeatherUtils.setTableValues(view.tDetailWeather, city, this)
         WeatherUtils.setNextDaysValues(view.llDetailNextDays, city)

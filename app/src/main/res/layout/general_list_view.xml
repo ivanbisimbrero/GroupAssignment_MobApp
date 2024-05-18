@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-android:id="@+id/linearLayout"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayout"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
 android:orientation="vertical" >
@@ -25,21 +26,21 @@ android:orientation="vertical" >
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:checked="true"
-        android:text="Temperature" />
+        android:text="@string/temperature" />
 
     <RadioButton
         android:id="@+id/rbRainProb"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="Precipitation" />
+        android:text="@string/precipitation" />
 
     <RadioButton
         android:id="@+id/rbCondition"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="Condition" />
+        android:text="@string/condition" />
 </RadioGroup>
 
 <ListView
