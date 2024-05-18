@@ -1,10 +1,11 @@
 package com.example.weatherapp_mobapp.model
 
 data class Message(
-    val username: String,
-    val email: String,
-    val message: String,
-    val hour: String,
-    val isCurrentUser: Boolean
+    val id: String = "",
+    val username: String = "",
+    val email: String = "",
+    val message: String = "",
+    val hour: String = "",
+    var isCurrentUser: Boolean = false
 )
 

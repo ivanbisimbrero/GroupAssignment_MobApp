@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherapp_mobapp.R
 import com.example.weatherapp_mobapp.model.Message
 
-class MessageAdapter(private val messageList: MutableList<Message>) :
+class MessageAdapter(val messageList: MutableList<Message>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val VIEW_TYPE_OUTGOING = 1
@@ -27,7 +27,11 @@ class MessageAdapter(private val messageList: MutableList<Message>) :
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (messageList[position].isCurrentUser) VIEW_TYPE_OUTGOING else VIEW_TYPE_INCOMING
+        return if (messageList[position].isCurrentUser) {
+            VIEW_TYPE_OUTGOING
+        } else {
+            VIEW_TYPE_INCOMING
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -55,9 +59,8 @@ class MessageAdapter(private val messageList: MutableList<Message>) :
 
     override fun getItemCount() = messageList.size
 
-    fun insertNewMessage(m: Message) {
-        messageList.add(m)
-        notifyItemInserted(messageList.size)
+    fun insertNewMessage(message: Message) {
+        messageList.add(message)
+        notifyItemInserted(messageList.size - 1)
     }
-
 }
