@@ -20,7 +20,7 @@ import java.util.Date
 
 class CityChatActivity : AppCompatActivity() {
     private val view by lazy { ActivityCityChatBinding.inflate(layoutInflater) }
-    private val database = Firebase.database("https://groupassignment-mobapp-default-rtdb.europe-west1.firebasedatabase.app/")
+    private val database = Firebase.database("https://grouptask-mobapp-default-rtdb.europe-west1.firebasedatabase.app/")
     private lateinit var dbReference: DatabaseReference
     private lateinit var messageAdapter: MessageAdapter
     private var isEditing = false
