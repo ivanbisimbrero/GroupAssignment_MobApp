@@ -1,6 +1,9 @@
 package com.example.weatherapp_mobapp
 
+import android.graphics.Rect
 import android.os.Bundle
+import android.view.View
+import android.view.ViewTreeObserver
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -45,6 +48,25 @@ class CityChatActivity : AppCompatActivity() {
             override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
                 super.onItemRangeInserted(positionStart, itemCount)
                 view.rvChatMessages.layoutManager!!.scrollToPosition(messageAdapter.itemCount - 1)
+            }
+        })
+
+        val rootView = findViewById<View>(android.R.id.content)
+        rootView.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+            override fun onGlobalLayout() {
+                val r = Rect()
+                rootView.getWindowVisibleDisplayFrame(r)
+                val screenHeight = rootView.rootView.height
+
+                // r.bottom is the position above soft keypad or device button.
+                // if keypad is shown, the r.bottom is smaller than the screen height.
+                val keypadHeight = screenHeight - r.bottom
+
+                // 0.15 ratio is perhaps enough to determine keypad height.
+                if (keypadHeight > screenHeight * 0.15) {
+                    // keyboard is opened
+                    view.rvChatMessages.layoutManager!!.scrollToPosition(messageAdapter.itemCount - 1)
+                }
             }
         })
 
