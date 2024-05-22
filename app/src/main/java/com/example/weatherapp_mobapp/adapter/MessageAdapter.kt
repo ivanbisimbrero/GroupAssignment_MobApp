@@ -49,11 +49,11 @@ class MessageAdapter(val messageList: MutableList<Message>) :
         val currentMessage = messageList[position]
         if (holder is OutgoingMessageViewHolder) {
             holder.tvMessageUsername.text = currentMessage.username
-            holder.tvMessageHour.text = currentMessage.hour
+            holder.tvMessageHour.text = currentMessage.hour.substring(0, currentMessage.hour.length - 3) //Pick up only the date and the hh:mm
             holder.tvMessageText.text = currentMessage.message
         } else if (holder is IncomingMessageViewHolder) {
             holder.tvMessageUsername.text = currentMessage.username
-            holder.tvMessageHour.text = currentMessage.hour
+            holder.tvMessageHour.text = currentMessage.hour.substring(0, currentMessage.hour.length - 3)
             holder.tvMessageText.text = currentMessage.message
         }
     }
