@@ -26,4 +26,6 @@
     <string name="message">Message</string>
     <string name="email">Email</string>
     <string name="username">Username</string>
+    <string name="chat">Chat</string>
+    <string name="comments">Comments</string>
 </resources>

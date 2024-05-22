@@ -63,7 +63,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Chat"
+                android:text="@string/chat"
+                android:backgroundTint="@android:color/darker_gray"/>
+
+            <Button
+                android:id="@+id/btnCityComments"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/comments"
                 android:backgroundTint="@android:color/darker_gray"/>
         </LinearLayout>
 
