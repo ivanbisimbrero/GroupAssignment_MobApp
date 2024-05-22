@@ -9,8 +9,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
+            android:orientation="horizontal"
+            android:background="@drawable/outlined_rounded_bg">
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -40,39 +40,46 @@
                 android:id="@+id/btnChange"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Change"
+                android:backgroundTint="@color/iosBlue"
+                android:text="Login"
                 android:layout_gravity="center"/>
         </LinearLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvChatMessages"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvChatMessages"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
-        <LinearLayout
+    <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <EditText
                 android:id="@+id/etMessages"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
                 android:hint="@string/message"
+                android:paddingLeft="16dp"
                 android:importantForAutofill="no"
                 android:inputType="text"
                 android:minHeight="48dp"
-                tools:ignore="NestedWeights" />
+                tools:ignore="NestedWeights"
+                android:background="@drawable/rounded_bg"
+                android:backgroundTint="@color/iosBlue"/>
 
-            <Button
+            <ImageButton
                 android:id="@+id/btnSend"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/send" />
+                android:padding="6dp"
+                android:layout_marginLeft="8dp"
+                android:src="@drawable/send_icon"
+                android:background="@drawable/rounded_btn_bg"
+                android:contentDescription="@string/send_button"/>
         </LinearLayout>
 
 </LinearLayout>
