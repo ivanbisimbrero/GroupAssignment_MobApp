@@ -37,17 +37,17 @@ class CityChatActivity : AppCompatActivity() {
         dbReference = database.getReference(cityName)
 
         //Setup variable text from the layout
-        view.etChatUsername.setText(DataUtils.mainUser.name)
-        view.etChatEmail.setText(DataUtils.mainUser.email)
+        view.chat.etChatUsername.setText(DataUtils.mainUser.name)
+        view.chat.etChatEmail.setText(DataUtils.mainUser.email)
 
         //Setup the message adapter
         messageAdapter = MessageAdapter(mutableListOf())
-        view.rvChatMessages.adapter = messageAdapter
-        view.rvChatMessages.layoutManager = LinearLayoutManager(this)
+        view.chat.rvChatMessages.adapter = messageAdapter
+        view.chat.rvChatMessages.layoutManager = LinearLayoutManager(this)
         messageAdapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
             override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
                 super.onItemRangeInserted(positionStart, itemCount)
-                view.rvChatMessages.layoutManager!!.scrollToPosition(messageAdapter.itemCount - 1)
+                view.chat.rvChatMessages.layoutManager!!.scrollToPosition(messageAdapter.itemCount - 1)
             }
         })
 
@@ -65,20 +65,20 @@ class CityChatActivity : AppCompatActivity() {
                 // 0.15 ratio is perhaps enough to determine keypad height.
                 if (keypadHeight > screenHeight * 0.15) {
                     // keyboard is opened
-                    view.rvChatMessages.layoutManager!!.scrollToPosition(messageAdapter.itemCount - 1)
+                    view.chat.rvChatMessages.layoutManager!!.scrollToPosition(messageAdapter.itemCount - 1)
                 }
             }
         })
 
         //Setup the buttons
-        view.btnSend.setOnClickListener {
-            if(view.etMessages.text.toString().isNotEmpty() && !haveEmptyUsernameAndEmail()) run {
+        view.chat.btnSend.setOnClickListener {
+            if(view.chat.etMessages.text.toString().isNotEmpty() && !haveEmptyUsernameAndEmail()) run {
                 val currentDate = sdf.format(Date())
                 println(currentDate)
                 val newMessageKey = dbReference.push().key!!
                 val message = Message(
                     newMessageKey ,DataUtils.mainUser.name, DataUtils.mainUser.email,
-                    view.etMessages.text.toString(), currentDate, false
+                    view.chat.etMessages.text.toString(), currentDate, false
                 )
                 //We first push it to the db, with the message key that we have obtained from the db
                 dbReference.child(newMessageKey).setValue(message)
@@ -86,26 +86,26 @@ class CityChatActivity : AppCompatActivity() {
                 message.isCurrentUser = true
                 //And finally, we add it to our adapter
                 messageAdapter.insertNewMessage(message)
-                view.etMessages.setText("")
+                view.chat.etMessages.setText("")
             } else {
                 Toast.makeText(this, "Please, set up an email and username", Toast.LENGTH_SHORT).show()
             }
         }
-        view.btnChange.setOnClickListener {
+        view.chat.btnChange.setOnClickListener {
             if (isEditing) {
                 // Save values and disable edit text
-                DataUtils.mainUser.name = view.etChatUsername.text.toString()
-                DataUtils.mainUser.email = view.etChatEmail.text.toString()
-                view.etChatUsername.isEnabled = false
-                view.etChatEmail.isEnabled = false
-                view.btnChange.text = "Change"
+                DataUtils.mainUser.name = view.chat.etChatUsername.text.toString()
+                DataUtils.mainUser.email = view.chat.etChatEmail.text.toString()
+                view.chat.etChatUsername.isEnabled = false
+                view.chat.etChatEmail.isEnabled = false
+                view.chat.btnChange.text = "Change"
             } else {
                 // Enable edit text
-                view.etChatUsername.isEnabled = true
-                view.etChatEmail.isEnabled = true
-                view.etChatUsername.setText(DataUtils.mainUser.name)
-                view.etChatEmail.setText(DataUtils.mainUser.email)
-                view.btnChange.text = "Set"
+                view.chat.etChatUsername.isEnabled = true
+                view.chat.etChatEmail.isEnabled = true
+                view.chat.etChatUsername.setText(DataUtils.mainUser.name)
+                view.chat.etChatEmail.setText(DataUtils.mainUser.email)
+                view.chat.btnChange.text = "Set"
             }
             isEditing = !isEditing
         }

@@ -19,9 +19,12 @@
         android:theme="@style/Theme.WeatherAPP_MobAPP"
         tools:targetApi="31">
         <activity
-            android:name=".CityChatActivity"
-            android:windowSoftInputMode="adjustResize"
+            android:name=".CityPostedComments"
             android:exported="false" />
+        <activity
+            android:name=".CityChatActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".A6HistoricalData"
             android:exported="false" />
