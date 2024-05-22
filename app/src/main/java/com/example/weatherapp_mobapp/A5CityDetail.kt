@@ -59,6 +59,12 @@ class A5CityDetail : AppCompatActivity() {
             }
             startActivity(intent)
         }
+        view.btnCityComments.setOnClickListener {
+            val intent = Intent(this, CityPostedComments::class.java).apply {
+                putExtra("cityName", city.name)
+            }
+            startActivity(intent)
+        }
         WeatherUtils.setTableValues(view.tDetailWeather, city, this)
         WeatherUtils.setNextDaysValues(view.llDetailNextDays, city)
         WeatherUtils.setMoreDetailsValues(view.llDetailMoreInfo, city)

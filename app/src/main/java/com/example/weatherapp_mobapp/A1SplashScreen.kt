@@ -50,7 +50,7 @@ class A1SplashScreen : AppCompatActivity() {
         val scope = CoroutineScope(Dispatchers.IO)
         val jobs = mutableListOf<Job>()
 
-        fusedLocationClient.lastLocation.addOnSuccessListener { location: Location ->
+        fusedLocationClient.lastLocation.addOnSuccessListener { location: Location->
             val coordRequest = CityCoordinatesRequest(location.latitude, location.longitude)
 
             val locationJob = scope.launch {
