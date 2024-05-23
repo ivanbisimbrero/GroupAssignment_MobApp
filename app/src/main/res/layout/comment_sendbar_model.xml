@@ -16,7 +16,9 @@
         android:inputType="textMultiLine"
         android:minHeight="48dp"
         android:background="@drawable/rounded_bg"
-        android:backgroundTint="@color/iosBlue"/>
+        android:backgroundTint="@color/iosBlue"
+        android:maxLines="3"
+        android:scrollbars="vertical"/>
 
     <Button
         android:id="@+id/btnPostComment"
