@@ -13,6 +13,7 @@ import com.google.android.gms.location.LocationServices
 import com.example.weatherapp_mobapp.databinding.ActivityA1SplashScreenBinding
 import com.example.weatherapp_mobapp.requestCity.CityCoordinatesRequest
 import com.example.weatherapp_mobapp.sharedPreferences.CrudAPI
+import com.example.weatherapp_mobapp.sharedPreferences.SHARED_PREFERENCES_KEY
 import com.example.weatherapp_mobapp.sharedPreferences.SHARED_PREFERENCES_NAME
 import com.example.weatherapp_mobapp.sharedPreferences.SharedPreferencesRepository
 import com.example.weatherapp_mobapp.utils.DataUtils
@@ -33,7 +34,7 @@ class A1SplashScreen : AppCompatActivity() {
             application.getSharedPreferences(
                 SHARED_PREFERENCES_NAME,
                 MODE_PRIVATE
-            )
+            ), SHARED_PREFERENCES_KEY
         )
     }
     private var dbHandler : DatabaseHelper = DatabaseHelper(this)

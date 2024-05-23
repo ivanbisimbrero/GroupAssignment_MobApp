@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.weatherapp_mobapp.adapter.CityAdapter
 import com.example.weatherapp_mobapp.model.City
 import com.example.weatherapp_mobapp.sharedPreferences.CrudAPI
+import com.example.weatherapp_mobapp.sharedPreferences.SHARED_PREFERENCES_KEY
 import com.example.weatherapp_mobapp.sharedPreferences.SHARED_PREFERENCES_NAME
 import com.example.weatherapp_mobapp.sharedPreferences.SharedPreferencesRepository
 import com.example.weatherapp_mobapp.utils.SearchUtils
@@ -25,7 +26,7 @@ abstract class BaseCityListActivity : AppCompatActivity() {
             application.getSharedPreferences(
                 SHARED_PREFERENCES_NAME,
                 MODE_PRIVATE
-            )
+            ), SHARED_PREFERENCES_KEY
         )
     }
     override fun onCreate(savedInstanceState: Bundle?) {

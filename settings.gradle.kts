@@ -14,6 +14,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "GroupAssignment_MobApp"
+rootProject.name = "GroupAssignment_MobAPP"
 include(":app")
  

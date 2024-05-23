@@ -4,28 +4,29 @@ import android.content.SharedPreferences
 
 const val SHARED_PREFERENCES_NAME = "PREFERENCES"
 const val SHARED_PREFERENCES_KEY = "FAVOURITES"
+const val SHARED_PREFERENCES_KEY_COMMENTS = "COMMENTS"
 
-class SharedPreferencesRepository(private val sharedPreferences: SharedPreferences) :
-    CrudAPI {
+class SharedPreferencesRepository(private val sharedPreferences: SharedPreferences,
+                                  private val key: String) : CrudAPI {
 
     override fun save(value: String) {
-        val values = sharedPreferences.getStringSet(SHARED_PREFERENCES_KEY, mutableSetOf())!!
+        val values = sharedPreferences.getStringSet(key, mutableSetOf())!!
         with(sharedPreferences.edit()) {
-            putStringSet(SHARED_PREFERENCES_KEY, values.plus(value))
+            putStringSet(key, values.plus(value))
             apply()
         }
     }
 
     override fun delete(value: String) {
-        val values = sharedPreferences.getStringSet(SHARED_PREFERENCES_KEY, mutableSetOf())
+        val values = sharedPreferences.getStringSet(key, mutableSetOf())
         with(sharedPreferences.edit()) {
-            putStringSet(SHARED_PREFERENCES_KEY, values!!.minus(value))
+            putStringSet(key, values!!.minus(value))
             apply()
         }
     }
 
     override fun list(): Set<String> {
-        return sharedPreferences.getStringSet(SHARED_PREFERENCES_KEY, mutableSetOf())!!
+        return sharedPreferences.getStringSet(key, mutableSetOf())!!
     }
 
     override fun contains(value: String): Boolean {
