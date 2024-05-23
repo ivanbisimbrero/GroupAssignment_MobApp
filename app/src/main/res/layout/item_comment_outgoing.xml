@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="8dp"
     android:gravity="start">
@@ -40,7 +41,8 @@
             android:focusableInTouchMode="false"
             android:minWidth="48dp"
             android:minHeight="48dp"
-            android:src="@drawable/delete_bin"/>
+            android:src="@drawable/delete_bin"
+            app:tint="?attr/colorOnSecondary"/>
 
     </LinearLayout>
 

@@ -28,7 +28,8 @@
             android:textAlignment="center"
             android:textColor="?attr/colorPrimary"
             android:textSize="24sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textAppearance="@style/TextAppearance.OutlineText"/>
 
         <include
             android:id="@+id/tCurrentWeather"
