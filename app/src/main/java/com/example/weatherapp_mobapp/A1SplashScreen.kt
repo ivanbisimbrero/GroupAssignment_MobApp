@@ -14,7 +14,7 @@ import com.example.weatherapp_mobapp.databinding.ActivityA1SplashScreenBinding
 import com.example.weatherapp_mobapp.requestCity.CityCoordinatesRequest
 import com.example.weatherapp_mobapp.sharedPreferences.CrudAPI
 import com.example.weatherapp_mobapp.sharedPreferences.SHARED_PREFERENCES_KEY
-import com.example.weatherapp_mobapp.sharedPreferences.SHARED_PREFERENCES_KEY_COMMENTS
+import com.example.weatherapp_mobapp.sharedPreferences.SHARED_PREFERENCES_KEY_USER
 import com.example.weatherapp_mobapp.sharedPreferences.SHARED_PREFERENCES_NAME
 import com.example.weatherapp_mobapp.sharedPreferences.SharedPreferencesRepository
 import com.example.weatherapp_mobapp.utils.DataUtils
@@ -43,7 +43,7 @@ class A1SplashScreen : AppCompatActivity() {
             application.getSharedPreferences(
                 SHARED_PREFERENCES_NAME,
                 MODE_PRIVATE
-            ), SHARED_PREFERENCES_KEY_COMMENTS
+            ), SHARED_PREFERENCES_KEY_USER
         )
     }
     private var dbHandler : DatabaseHelper = DatabaseHelper(this)

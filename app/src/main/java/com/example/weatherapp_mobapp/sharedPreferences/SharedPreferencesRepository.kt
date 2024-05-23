@@ -4,7 +4,7 @@ import android.content.SharedPreferences
 
 const val SHARED_PREFERENCES_NAME = "PREFERENCES"
 const val SHARED_PREFERENCES_KEY = "FAVOURITES"
-const val SHARED_PREFERENCES_KEY_COMMENTS = "COMMENTS"
+const val SHARED_PREFERENCES_KEY_USER = "USER"
 
 class SharedPreferencesRepository(private val sharedPreferences: SharedPreferences,
                                   private val key: String) : CrudAPI {

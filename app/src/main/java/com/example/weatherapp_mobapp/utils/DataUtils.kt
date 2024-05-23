@@ -13,7 +13,6 @@ import io.ktor.client.request.get
 import io.ktor.client.statement.HttpResponse
 import io.ktor.client.statement.bodyAsText
 import com.example.weatherapp_mobapp.sharedPreferences.CrudAPI
-import com.example.weatherapp_mobapp.sharedPreferences.SHARED_PREFERENCES_KEY_COMMENTS
 import com.example.weatherapp_mobapp.sharedPreferences.SHARED_PREFERENCES_NAME
 import com.example.weatherapp_mobapp.sharedPreferences.SharedPreferencesRepository
 import com.example.weatherapp_mobapp.weatherdb.DatabaseHelper
@@ -78,7 +77,11 @@ class DataUtils {
         fun initUser(repository: CrudAPI) {
             cities = citiesMap.values.toMutableList()
             val listUsers = repository.list().toList()
-            mainUser = User(listUsers[0], listUsers[0], currentCity, cities, mutableListOf()) //En teoría usuario ivan e imail
+            if(listUsers.isNotEmpty()) {
+                mainUser = User(listUsers[0], listUsers[1], currentCity, cities, mutableListOf())
+            } else {
+                mainUser = User("", "", currentCity, cities, mutableListOf())
+            }
             println(mainUser)
         }
 

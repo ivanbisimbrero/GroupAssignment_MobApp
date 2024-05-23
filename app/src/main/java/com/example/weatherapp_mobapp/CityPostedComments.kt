@@ -20,7 +20,7 @@ import com.example.weatherapp_mobapp.model.Comment
 import com.example.weatherapp_mobapp.model.Message
 import com.example.weatherapp_mobapp.sharedPreferences.CrudAPI
 import com.example.weatherapp_mobapp.sharedPreferences.SHARED_PREFERENCES_KEY
-import com.example.weatherapp_mobapp.sharedPreferences.SHARED_PREFERENCES_KEY_COMMENTS
+import com.example.weatherapp_mobapp.sharedPreferences.SHARED_PREFERENCES_KEY_USER
 import com.example.weatherapp_mobapp.sharedPreferences.SHARED_PREFERENCES_NAME
 import com.example.weatherapp_mobapp.sharedPreferences.SharedPreferencesRepository
 import com.example.weatherapp_mobapp.utils.DataUtils
@@ -46,7 +46,7 @@ class CityPostedComments : BaseCommunityActivity() {
             application.getSharedPreferences(
                 SHARED_PREFERENCES_NAME,
                 MODE_PRIVATE
-            ), SHARED_PREFERENCES_KEY_COMMENTS
+            ), SHARED_PREFERENCES_KEY_USER
         )
     }
 
