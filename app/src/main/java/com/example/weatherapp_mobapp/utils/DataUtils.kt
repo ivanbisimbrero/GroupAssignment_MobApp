@@ -23,7 +23,7 @@ class DataUtils {
 
     companion object {
         //const val API_KEY = "UGGQU4XS3QHQ4VC3KSR2JSL3G"
-        const val API_KEY = "A58D6UR5PXC67DAHDQNMJJVGD"
+        const val API_KEY = "FY4P2MELJGC44AYM8Z3QMGA9L"
         //const val API_KEY = "LRH7D4ZHU7LAWANGZBRQXPPGU" //Change if necessary
         const val REVERSE_API_KEY = "73ae2d27d6034e278eaae0007c703f28"
 

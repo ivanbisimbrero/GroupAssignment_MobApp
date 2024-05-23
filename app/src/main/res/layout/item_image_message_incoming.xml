@@ -9,7 +9,7 @@
         android:id="@+id/tvMessageUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Username"
+        android:text="@string/usernameimage"
         android:textStyle="bold" />
 
     <TextView
