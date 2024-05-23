@@ -14,7 +14,8 @@
         android:textAlignment="center"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:textColor="?attr/colorOnSecondary"/>
+        android:textColor="?attr/colorOnSecondary"
+        android:textAppearance="@style/TextAppearance.OutlineText"/>
 
     <TableLayout
         android:layout_width="match_parent"
