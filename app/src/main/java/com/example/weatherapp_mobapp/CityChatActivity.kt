@@ -69,7 +69,7 @@ class CityChatActivity : BaseCommunityActivity() {
         if (DataUtils.mainUser.name.isEmpty() && DataUtils.mainUser.email.isEmpty()){
             view.chat.btnChange.text = "Login"
         } else {
-            view.chat.btnChange.text = "Change"
+            view.chat.btnChange.text = "Change Username"
             // Set the visibility of the EditText fields to GONE
             view.chat.etChatUsername.visibility = View.GONE
             view.chat.etChatEmail.visibility = View.GONE
@@ -116,6 +116,12 @@ class CityChatActivity : BaseCommunityActivity() {
             }
         }
         view.chat.btnChange.setOnClickListener {
+            //Check if the fields contains ; that is a ilegal character
+            if(view.chat.etChatEmail.text.toString().contains(";") ||
+                view.chat.etChatUsername.text.toString().contains(";")) {
+                Toast.makeText(this, "Ilegal character -> ;. Remove it!", Toast.LENGTH_SHORT).show()
+                isEditing = false
+            }
             if (isEditing) {
                 // Save values and disable edit text
                 DataUtils.mainUser.name = view.chat.etChatUsername.text.toString()
@@ -128,14 +134,13 @@ class CityChatActivity : BaseCommunityActivity() {
                 view.chat.etChatEmail.visibility = View.GONE
 
                 //Saved user in shared preferences
-                repository.save(DataUtils.mainUser.name)
-                repository.save(DataUtils.mainUser.email)
+                repository.save(DataUtils.mainUser.name + ";" + DataUtils.mainUser.email)
 
                 // Change the button text
                 if (DataUtils.mainUser.name.isEmpty() && DataUtils.mainUser.email.isEmpty()){
                     view.chat.btnChange.text = "Login"
                 } else {
-                    view.chat.btnChange.text = "Change"
+                    view.chat.btnChange.text = "Change Username"
                 }
             } else {
                 // Enable edit text
@@ -150,8 +155,7 @@ class CityChatActivity : BaseCommunityActivity() {
                 view.chat.etChatEmail.visibility = View.VISIBLE
 
                 //Delete current user from sharedPreferences
-                repository.delete(DataUtils.mainUser.name)
-                repository.delete(DataUtils.mainUser.email)
+                repository.delete(DataUtils.mainUser.name + ";" + DataUtils.mainUser.email)
             }
             isEditing = !isEditing
         }

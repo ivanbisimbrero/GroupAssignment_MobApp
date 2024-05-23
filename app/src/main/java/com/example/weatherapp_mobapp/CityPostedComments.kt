@@ -78,7 +78,7 @@ class CityPostedComments : BaseCommunityActivity() {
         if (DataUtils.mainUser.name.isEmpty() && DataUtils.mainUser.email.isEmpty()){
             view.comments.btnChange.text = "Login"
         } else {
-            view.comments.btnChange.text = "Change"
+            view.comments.btnChange.text = "Change Username"
             // Set the visibility of the EditText fields to GONE
             view.comments.etChatUsername.visibility = View.GONE
             view.comments.etChatEmail.visibility = View.GONE
@@ -126,6 +126,11 @@ class CityPostedComments : BaseCommunityActivity() {
             }
         }
         view.comments.btnChange.setOnClickListener {
+            if(view.comments.etChatEmail.text.toString().contains(";") ||
+                view.comments.etChatUsername.text.toString().contains(";")) {
+                Toast.makeText(this, "Ilegal character -> ;. Remove it!", Toast.LENGTH_SHORT).show()
+                isEditing = false
+            }
             if (isEditing) {
                 // Save values and disable edit text
                 DataUtils.mainUser.name = view.comments.etChatUsername.text.toString()
@@ -144,7 +149,7 @@ class CityPostedComments : BaseCommunityActivity() {
                 if (DataUtils.mainUser.name.isEmpty() && DataUtils.mainUser.email.isEmpty()){
                     view.comments.btnChange.text = "Login"
                 } else {
-                    view.comments.btnChange.text = "Change"
+                    view.comments.btnChange.text = "Change Username"
                 }
             } else {
                 // Enable edit text
