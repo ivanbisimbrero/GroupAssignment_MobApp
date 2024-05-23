@@ -21,14 +21,14 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <include
-            android:id="@+id/chat"
+            android:id="@+id/comments"
             layout="@layout/send_receive_model"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1" />
 
         <include layout="@layout/comment_sendbar_model"
-            android:id="@+id/sendMessage"/>
+            android:id="@+id/sendComment"/>
     </LinearLayout>
 
 

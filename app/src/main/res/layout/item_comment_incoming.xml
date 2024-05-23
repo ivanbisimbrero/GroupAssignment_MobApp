@@ -8,7 +8,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <TextView
@@ -29,29 +29,27 @@
             android:textSize="12sp"
             android:gravity="start" />
 
-    </LinearLayout>
+        <ImageButton
+            android:id="@+id/btnBin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/desc"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:minWidth="48dp"
+            android:minHeight="48dp"
+            android:src="@drawable/delete_bin"/>
 
-    <ImageButton
-        android:id="@+id/btnBin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:contentDescription="@string/desc"
-        android:focusable="false"
-        android:focusableInTouchMode="false"
-        android:minWidth="48dp"
-        android:minHeight="48dp"
-        android:src="@drawable/rubbish_bin"/>
+    </LinearLayout>
 
     <TextView
         android:id="@+id/tvCommentContent"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
         android:paddingTop="4dp"
         android:textSize="14sp"
         android:gravity="start" />
-
-
 </LinearLayout>

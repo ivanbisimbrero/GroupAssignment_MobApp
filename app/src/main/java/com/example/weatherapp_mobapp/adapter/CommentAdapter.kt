@@ -1,11 +1,13 @@
 package com.example.weatherapp_mobapp.adapter
 
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherapp_mobapp.R
 import com.example.weatherapp_mobapp.model.Comment
+import com.example.weatherapp_mobapp.model.Message
 
 class CommentAdapter(val commentsList: MutableList<Comment>):
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -19,16 +21,48 @@ class CommentAdapter(val commentsList: MutableList<Comment>):
         val tvCommentContent: TextView = itemView.findViewById(R.id.tvCommentContent)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        TODO("Not yet implemented")
+    class IncomingCommentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val tvCommentUsername: TextView = itemView.findViewById(R.id.tvCommentUsername)
+        val tvCommentTimestamp: TextView = itemView.findViewById(R.id.tvCommentTimestamp)
+        val tvCommentContent: TextView = itemView.findViewById(R.id.tvCommentContent)
     }
 
-    override fun getItemCount(): Int {
-        TODO("Not yet implemented")
+    override fun getItemViewType(position: Int): Int {
+        return if (commentsList[position].isCurrentUser) {
+            VIEW_TYPE_OUTGOING
+        } else {
+            VIEW_TYPE_INCOMING
+        }
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return if (viewType == VIEW_TYPE_OUTGOING) {
+            val view = LayoutInflater.from(parent.context).inflate(R.layout.item_comment_outgoing, parent, false)
+            CommentAdapter.OutgoingCommentViewHolder(view)
+        } else {
+            val view = LayoutInflater.from(parent.context).inflate(R.layout.item_comment_incoming, parent, false)
+            CommentAdapter.IncomingCommentViewHolder(view)
+        }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        TODO("Not yet implemented")
+        val currentComment = commentsList[position]
+        if (holder is OutgoingCommentViewHolder) {
+            holder.tvCommentUsername.text = currentComment.username
+            holder.tvCommentTimestamp.text = currentComment.timestamp.substring(0, currentComment.timestamp.length - 3) //Pick up only the date and the hh:mm
+            holder.tvCommentContent.text = currentComment.content
+        } else if (holder is IncomingCommentViewHolder) {
+            holder.tvCommentUsername.text = currentComment.username
+            holder.tvCommentTimestamp.text = currentComment.timestamp.substring(0, currentComment.timestamp.length - 3)
+            holder.tvCommentContent.text = currentComment.content
+        }
+    }
+
+    override fun getItemCount() = commentsList.size
+
+    fun insertNewComment(comment: Comment) {
+        commentsList.add(comment)
+        notifyItemInserted(commentsList.size - 1)
     }
 
 }
