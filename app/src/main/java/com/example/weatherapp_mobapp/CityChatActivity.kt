@@ -13,6 +13,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherapp_mobapp.adapter.MessageAdapter
 import com.example.weatherapp_mobapp.databinding.ActivityCityChatBinding
 import com.example.weatherapp_mobapp.model.Message
+import com.example.weatherapp_mobapp.sharedPreferences.CrudAPI
+import com.example.weatherapp_mobapp.sharedPreferences.SHARED_PREFERENCES_KEY_USER
+import com.example.weatherapp_mobapp.sharedPreferences.SHARED_PREFERENCES_NAME
+import com.example.weatherapp_mobapp.sharedPreferences.SharedPreferencesRepository
 import com.example.weatherapp_mobapp.utils.DataUtils
 import com.google.firebase.Firebase
 import com.google.firebase.database.ChildEventListener
@@ -31,6 +35,14 @@ class CityChatActivity : BaseCommunityActivity() {
     private var isEditing = false
     private val sdf = SimpleDateFormat("dd-MM-yyyy HH:mm:ss")
     private var currentInitDate = sdf.format(Date())
+    private val repository: CrudAPI by lazy {
+        SharedPreferencesRepository(
+            application.getSharedPreferences(
+                SHARED_PREFERENCES_NAME,
+                MODE_PRIVATE
+            ), SHARED_PREFERENCES_KEY_USER
+        )
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(view.root)
@@ -84,7 +96,9 @@ class CityChatActivity : BaseCommunityActivity() {
 
         //Setup the buttons
         view.sendMessage.btnSend.setOnClickListener {
-            if(view.sendMessage.etMessages.text.toString().isNotEmpty() && !haveEmptyUsernameAndEmail()) run {
+            if(haveEmptyUsernameOrEmail()) {
+                Toast.makeText(this, "Please, set up an email and username", Toast.LENGTH_SHORT).show()
+            } else if(view.sendMessage.etMessages.text.toString().isNotEmpty()) run {
                 val currentDate = sdf.format(Date())
                 println(currentDate)
                 val newMessageKey = dbReference.push().key!!
@@ -99,8 +113,6 @@ class CityChatActivity : BaseCommunityActivity() {
                 //And finally, we add it to our adapter
                 messageAdapter.insertNewMessage(message)
                 view.sendMessage.etMessages.setText("")
-            } else {
-                Toast.makeText(this, "Please, set up an email and username", Toast.LENGTH_SHORT).show()
             }
         }
         view.chat.btnChange.setOnClickListener {
@@ -114,6 +126,10 @@ class CityChatActivity : BaseCommunityActivity() {
                 // Set the visibility of the EditText fields to GONE
                 view.chat.etChatUsername.visibility = View.GONE
                 view.chat.etChatEmail.visibility = View.GONE
+
+                //Saved user in shared preferences
+                repository.save(DataUtils.mainUser.name)
+                repository.save(DataUtils.mainUser.email)
 
                 // Change the button text
                 if (DataUtils.mainUser.name.isEmpty() && DataUtils.mainUser.email.isEmpty()){
@@ -132,6 +148,10 @@ class CityChatActivity : BaseCommunityActivity() {
                 // Set the visibility of the EditText fields to VISIBLE
                 view.chat.etChatUsername.visibility = View.VISIBLE
                 view.chat.etChatEmail.visibility = View.VISIBLE
+
+                //Delete current user from sharedPreferences
+                repository.delete(DataUtils.mainUser.name)
+                repository.delete(DataUtils.mainUser.email)
             }
             isEditing = !isEditing
         }
@@ -161,7 +181,7 @@ class CityChatActivity : BaseCommunityActivity() {
         currentInitDate = sdf.format(Date())
     }
 
-    private fun haveEmptyUsernameAndEmail(): Boolean {
-        return DataUtils.mainUser.name.isEmpty() && DataUtils.mainUser.email.isEmpty()
+    private fun haveEmptyUsernameOrEmail(): Boolean {
+        return DataUtils.mainUser.name.isEmpty() || DataUtils.mainUser.email.isEmpty()
     }
 }

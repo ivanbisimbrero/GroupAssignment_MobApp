@@ -3,6 +3,7 @@ package com.example.weatherapp_mobapp.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherapp_mobapp.R
@@ -10,20 +11,17 @@ import com.example.weatherapp_mobapp.model.Comment
 import com.example.weatherapp_mobapp.model.Message
 import com.example.weatherapp_mobapp.sharedPreferences.CrudAPI
 
-class CommentAdapter(val commentsList: MutableList<Comment>):
+class CommentAdapter(val commentsList: MutableList<Comment>, private val onDeleteClickListener: (Comment) -> Unit):
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val VIEW_TYPE_OUTGOING = 1
     private val VIEW_TYPE_INCOMING = 2
 
-    init {
-        //commentsList.addAll(repository.list())
-    }
-
     class OutgoingCommentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val tvCommentUsername: TextView = itemView.findViewById(R.id.tvCommentUsername)
         val tvCommentTimestamp: TextView = itemView.findViewById(R.id.tvCommentTimestamp)
         val tvCommentContent: TextView = itemView.findViewById(R.id.tvCommentContent)
+        val btnBin: ImageButton = itemView.findViewById(R.id.btnBin)
     }
 
     class IncomingCommentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -56,6 +54,9 @@ class CommentAdapter(val commentsList: MutableList<Comment>):
             holder.tvCommentUsername.text = currentComment.username
             holder.tvCommentTimestamp.text = currentComment.hour.substring(0, currentComment.hour.length - 3) //Pick up only the date and the hh:mm
             holder.tvCommentContent.text = currentComment.message
+            holder.btnBin.setOnClickListener {
+                onDeleteClickListener(currentComment)
+            }
         } else if (holder is IncomingCommentViewHolder) {
             holder.tvCommentUsername.text = currentComment.username
             holder.tvCommentTimestamp.text = currentComment.hour.substring(0, currentComment.hour.length - 3)
@@ -68,6 +69,14 @@ class CommentAdapter(val commentsList: MutableList<Comment>):
     fun insertNewComment(comment: Comment) {
         commentsList.add(comment)
         notifyItemInserted(commentsList.size - 1)
+    }
+
+    fun removeComment(comment: Comment) {
+        val index = commentsList.indexOfFirst { it.id == comment.id }
+        if (index != -1) {
+            commentsList.removeAt(index)
+            notifyItemRemoved(index)
+        }
     }
 
 }

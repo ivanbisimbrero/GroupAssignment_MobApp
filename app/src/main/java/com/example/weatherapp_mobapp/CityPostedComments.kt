@@ -2,6 +2,7 @@ package com.example.weatherapp_mobapp
 
 import android.graphics.Rect
 import android.os.Bundle
+import android.provider.ContactsContract.Data
 import android.view.View
 import android.view.ViewTreeObserver
 import android.widget.Toast
@@ -18,7 +19,8 @@ import com.example.weatherapp_mobapp.databinding.ActivityCityPostedCommentsBindi
 import com.example.weatherapp_mobapp.model.Comment
 import com.example.weatherapp_mobapp.model.Message
 import com.example.weatherapp_mobapp.sharedPreferences.CrudAPI
-import com.example.weatherapp_mobapp.sharedPreferences.SHARED_PREFERENCES_KEY_COMMENTS
+import com.example.weatherapp_mobapp.sharedPreferences.SHARED_PREFERENCES_KEY
+import com.example.weatherapp_mobapp.sharedPreferences.SHARED_PREFERENCES_KEY_USER
 import com.example.weatherapp_mobapp.sharedPreferences.SHARED_PREFERENCES_NAME
 import com.example.weatherapp_mobapp.sharedPreferences.SharedPreferencesRepository
 import com.example.weatherapp_mobapp.utils.DataUtils
@@ -39,6 +41,15 @@ class CityPostedComments : BaseCommunityActivity() {
     private var isEditing = false
     private val sdf = SimpleDateFormat("dd-MM-yyyy HH:mm:ss")
     private var currentInitDate = sdf.format(Date())
+    private val repository: CrudAPI by lazy {
+        SharedPreferencesRepository(
+            application.getSharedPreferences(
+                SHARED_PREFERENCES_NAME,
+                MODE_PRIVATE
+            ), SHARED_PREFERENCES_KEY_USER
+        )
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(view.root)
@@ -51,7 +62,9 @@ class CityPostedComments : BaseCommunityActivity() {
         view.comments.etChatEmail.setText(DataUtils.mainUser.email)
 
         //Setup the comment adapter
-        commentAdapter = CommentAdapter(mutableListOf())
+        commentAdapter = CommentAdapter(mutableListOf()) { comment ->
+            deleteComment(comment)
+        }
         view.comments.rvChatMessages.adapter = commentAdapter
         view.comments.rvChatMessages.layoutManager = LinearLayoutManager(this)
         commentAdapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
@@ -92,7 +105,10 @@ class CityPostedComments : BaseCommunityActivity() {
 
         //Setup the buttons
         view.sendComment.btnPostComment.setOnClickListener {
-            if(view.sendComment.etComments.text.toString().isNotEmpty() && !haveEmptyUsernameAndEmail()) run {
+            if(haveEmptyUsernameOrEmail()) {
+                Toast.makeText(this, "Please, set up an email and username", Toast.LENGTH_SHORT)
+                    .show()
+            } else if(view.sendComment.etComments.text.toString().isNotEmpty()) run {
                 val currentDate = sdf.format(Date())
                 println(currentDate)
                 val newMessageKey = dbReference.push().key!!
@@ -107,8 +123,6 @@ class CityPostedComments : BaseCommunityActivity() {
                 //And finally, we add it to our adapter
                 commentAdapter.insertNewComment(comment)
                 view.sendComment.etComments.setText("")
-            } else {
-                Toast.makeText(this, "Please, set up an email and username", Toast.LENGTH_SHORT).show()
             }
         }
         view.comments.btnChange.setOnClickListener {
@@ -118,6 +132,10 @@ class CityPostedComments : BaseCommunityActivity() {
                 DataUtils.mainUser.email = view.comments.etChatEmail.text.toString()
                 view.comments.etChatUsername.isEnabled = false
                 view.comments.etChatEmail.isEnabled = false
+
+                //Saved user in shared preferences
+                repository.save(DataUtils.mainUser.name)
+                repository.save(DataUtils.mainUser.email)
 
                 // Set the visibility of the EditText fields to GONE
                 view.comments.etChatUsername.visibility = View.GONE
@@ -140,6 +158,10 @@ class CityPostedComments : BaseCommunityActivity() {
                 // Set the visibility of the EditText fields to VISIBLE
                 view.comments.etChatUsername.visibility = View.VISIBLE
                 view.comments.etChatEmail.visibility = View.VISIBLE
+
+                //Delete current user from sharedPreferences
+                repository.delete(DataUtils.mainUser.name)
+                repository.delete(DataUtils.mainUser.email)
             }
             isEditing = !isEditing
         }
@@ -160,7 +182,12 @@ class CityPostedComments : BaseCommunityActivity() {
             }
 
             override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {}
-            override fun onChildRemoved(snapshot: DataSnapshot) {}
+            override fun onChildRemoved(snapshot: DataSnapshot) {
+                val comment = snapshot.getValue(Comment::class.java)
+                if (comment != null) {
+                    commentAdapter.removeComment(comment)
+                }
+            }
             override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {}
             override fun onCancelled(error: DatabaseError) {}
         })
@@ -172,7 +199,17 @@ class CityPostedComments : BaseCommunityActivity() {
         currentInitDate = sdf.format(Date())
     }
 
-    private fun haveEmptyUsernameAndEmail(): Boolean {
-        return DataUtils.mainUser.name.isEmpty() && DataUtils.mainUser.email.isEmpty()
+    private fun haveEmptyUsernameOrEmail(): Boolean {
+        return DataUtils.mainUser.name.isEmpty() || DataUtils.mainUser.email.isEmpty()
+    }
+
+    private fun deleteComment(comment: Comment) {
+        dbReference.child(comment.id).removeValue().addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                commentAdapter.removeComment(comment)
+            } else {
+                Toast.makeText(this, "Error deleting comment", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 }

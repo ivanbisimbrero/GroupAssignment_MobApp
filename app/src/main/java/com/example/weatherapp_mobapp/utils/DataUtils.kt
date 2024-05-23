@@ -1,5 +1,6 @@
 package com.example.weatherapp_mobapp.utils
 
+import androidx.appcompat.app.AppCompatActivity
 import com.example.weatherapp_mobapp.model.City
 import com.example.weatherapp_mobapp.model.DefaultCities
 import com.example.weatherapp_mobapp.model.Forecast
@@ -12,11 +13,14 @@ import io.ktor.client.request.get
 import io.ktor.client.statement.HttpResponse
 import io.ktor.client.statement.bodyAsText
 import com.example.weatherapp_mobapp.sharedPreferences.CrudAPI
+import com.example.weatherapp_mobapp.sharedPreferences.SHARED_PREFERENCES_NAME
+import com.example.weatherapp_mobapp.sharedPreferences.SharedPreferencesRepository
 import com.example.weatherapp_mobapp.weatherdb.DatabaseHelper
 import java.time.LocalDate
 import java.util.concurrent.ConcurrentHashMap
 
 class DataUtils {
+
     companion object {
         //const val API_KEY = "UGGQU4XS3QHQ4VC3KSR2JSL3G"
         const val API_KEY = "A58D6UR5PXC67DAHDQNMJJVGD"
@@ -71,9 +75,14 @@ class DataUtils {
             citiesMap[request] = auxCity
         }
 
-        fun initUser() {
+        fun initUser(repository: CrudAPI) {
             cities = citiesMap.values.toMutableList()
-            mainUser = User("", "", currentCity, cities, mutableListOf())
+            val listUsers = repository.list().toList()
+            if(listUsers.isNotEmpty()) {
+                mainUser = User(listUsers[0], listUsers[1], currentCity, cities, mutableListOf())
+            } else {
+                mainUser = User("", "", currentCity, cities, mutableListOf())
+            }
             println(mainUser)
         }
 
