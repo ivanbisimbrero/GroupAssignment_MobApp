@@ -8,4 +8,6 @@ interface CrudAPI {
     fun list(): Set<String>
 
     fun contains(value: String): Boolean
+
+    fun parse(): List<String>
 }

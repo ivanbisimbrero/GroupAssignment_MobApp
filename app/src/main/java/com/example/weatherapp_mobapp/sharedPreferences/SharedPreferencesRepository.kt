@@ -33,4 +33,13 @@ class SharedPreferencesRepository(private val sharedPreferences: SharedPreferenc
         return list().contains(value)
     }
 
+    override fun parse(): List<String> {
+        val parsedList = mutableListOf<String>()
+        list().toList().forEach{ user ->
+            val params = user.split(";")
+            parsedList.add(params[0]) //Add user
+            parsedList.add(params[1]) //Add email
+        }
+        return parsedList
+    }
 }

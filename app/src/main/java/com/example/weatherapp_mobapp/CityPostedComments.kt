@@ -134,8 +134,7 @@ class CityPostedComments : BaseCommunityActivity() {
                 view.comments.etChatEmail.isEnabled = false
 
                 //Saved user in shared preferences
-                repository.save(DataUtils.mainUser.name)
-                repository.save(DataUtils.mainUser.email)
+                repository.save(DataUtils.mainUser.name + ";" + DataUtils.mainUser.email)
 
                 // Set the visibility of the EditText fields to GONE
                 view.comments.etChatUsername.visibility = View.GONE
@@ -160,8 +159,7 @@ class CityPostedComments : BaseCommunityActivity() {
                 view.comments.etChatEmail.visibility = View.VISIBLE
 
                 //Delete current user from sharedPreferences
-                repository.delete(DataUtils.mainUser.name)
-                repository.delete(DataUtils.mainUser.email)
+                repository.delete(DataUtils.mainUser.name + ";" + DataUtils.mainUser.email)
             }
             isEditing = !isEditing
         }

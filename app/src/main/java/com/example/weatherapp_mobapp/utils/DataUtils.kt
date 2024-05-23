@@ -77,7 +77,7 @@ class DataUtils {
 
         fun initUser(repository: CrudAPI) {
             cities = citiesMap.values.toMutableList()
-            val listUsers = repository.list().toList()
+            val listUsers = repository.parse()
             if(listUsers.isNotEmpty()) {
                 mainUser = User(listUsers[0], listUsers[1], currentCity, cities, mutableListOf())
             } else {
