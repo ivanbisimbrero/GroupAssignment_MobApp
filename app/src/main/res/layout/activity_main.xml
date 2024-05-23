@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:text="@string/current_location"
             android:textAlignment="center"
-            android:textColor="#000000"
+            android:textColor="?attr/colorPrimary"
             android:textSize="24sp"
             android:textStyle="bold" />
 
@@ -57,7 +57,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:backgroundTint="@android:color/darker_gray"
+                android:backgroundTint="?attr/colorSecondary"
                 android:text="List of Cities" />
 
             <Button
@@ -65,7 +65,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:backgroundTint="@android:color/darker_gray"
+                android:backgroundTint="?attr/colorSecondary"
                 android:text="Favourite Cities" />
         </LinearLayout>
 

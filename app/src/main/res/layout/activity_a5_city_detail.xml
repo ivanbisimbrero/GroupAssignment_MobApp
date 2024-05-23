@@ -56,7 +56,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/historical_data"
-                android:backgroundTint="@android:color/darker_gray"/>
+                android:backgroundTint="?attr/colorSecondary"/>
 
             <Button
                 android:id="@+id/btnCityChat"
@@ -64,7 +64,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/chat"
-                android:backgroundTint="@android:color/darker_gray"/>
+                android:backgroundTint="?attr/colorSecondary"/>
 
             <Button
                 android:id="@+id/btnCityComments"
@@ -72,7 +72,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/comments"
-                android:backgroundTint="@android:color/darker_gray"/>
+                android:backgroundTint="?attr/colorSecondary"/>
         </LinearLayout>
 
     </LinearLayout>

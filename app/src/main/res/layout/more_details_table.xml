@@ -32,7 +32,7 @@
                 android:layout_weight="1"
                 android:text="@string/feels_like"
                 android:textAlignment="textStart"
-                android:textColor="#000000"
+                android:textColor="?attr/colorOnSecondary"
                 android:textStyle="bold" />
 
             <TextView
@@ -41,7 +41,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textAlignment="textStart"
-                android:textColor="#000000" />
+                android:textColor="?attr/colorOnSecondary" />
         </TableRow>
 
         <TableRow
@@ -55,7 +55,7 @@
                 android:layout_weight="1"
                 android:text="@string/humidity"
                 android:textAlignment="textStart"
-                android:textColor="#000000"
+                android:textColor="?attr/colorOnSecondary"
                 android:textStyle="bold" />
 
             <TextView
@@ -64,7 +64,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textAlignment="textStart"
-                android:textColor="#000000" />
+                android:textColor="?attr/colorOnSecondary" />
         </TableRow>
 
         <TableRow
@@ -78,7 +78,7 @@
                 android:layout_weight="1"
                 android:text="@string/rain_probability"
                 android:textAlignment="textStart"
-                android:textColor="#000000"
+                android:textColor="?attr/colorOnSecondary"
                 android:textStyle="bold" />
 
             <TextView
@@ -87,7 +87,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textAlignment="textStart"
-                android:textColor="#000000" />
+                android:textColor="?attr/colorOnSecondary" />
         </TableRow>
 
         <TableRow
@@ -101,7 +101,7 @@
                 android:layout_weight="1"
                 android:text="@string/wind_speed"
                 android:textAlignment="textStart"
-                android:textColor="#000000"
+                android:textColor="?attr/colorOnSecondary"
                 android:textStyle="bold" />
 
             <TextView
@@ -110,7 +110,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textAlignment="textStart"
-                android:textColor="#000000" />
+                android:textColor="?attr/colorOnSecondary" />
         </TableRow>
     </TableLayout>
 </LinearLayout>

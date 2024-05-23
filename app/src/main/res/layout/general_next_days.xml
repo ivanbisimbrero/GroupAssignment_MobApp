@@ -13,7 +13,7 @@
         android:layout_marginBottom="4dp"
         android:text="@string/next_4_days"
         android:textAlignment="center"
-        android:textColor="#000000"
+        android:textColor="?attr/colorOnSecondary"
         android:textSize="16sp"
         android:textStyle="bold" />
 
@@ -35,7 +35,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.9"
                 android:textAlignment="center"
-                android:textColor="#000000" />
+                android:textColor="?attr/colorOnSecondary" />
 
             <TextView
                 android:id="@+id/tvDayPlusOneMin"
@@ -44,7 +44,7 @@
                 android:layout_weight="1"
                 android:text="@string/min"
                 android:textAlignment="center"
-                android:textColor="#000000"
+                android:textColor="?attr/colorOnSecondary"
                 android:textStyle="bold" />
 
             <TextView
@@ -53,7 +53,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textAlignment="center"
-                android:textColor="#000000" />
+                android:textColor="?attr/colorOnSecondary" />
 
             <TextView
                 android:id="@+id/tvDayPlusOneMax"
@@ -62,7 +62,7 @@
                 android:layout_weight="1"
                 android:text="@string/max"
                 android:textAlignment="center"
-                android:textColor="#000000"
+                android:textColor="?attr/colorOnSecondary"
                 android:textStyle="bold" />
 
             <TextView
@@ -71,7 +71,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textAlignment="center"
-                android:textColor="#000000" />
+                android:textColor="?attr/colorOnSecondary" />
         </LinearLayout>
 
         <LinearLayout
@@ -86,7 +86,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.9"
                 android:textAlignment="center"
-                android:textColor="#000000" />
+                android:textColor="?attr/colorOnSecondary" />
 
             <TextView
                 android:id="@+id/tvDayPlusTwoMin"
@@ -95,7 +95,7 @@
                 android:layout_weight="1"
                 android:text="@string/min"
                 android:textAlignment="center"
-                android:textColor="#000000"
+                android:textColor="?attr/colorOnSecondary"
                 android:textStyle="bold" />
 
             <TextView
@@ -104,7 +104,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textAlignment="center"
-                android:textColor="#000000" />
+                android:textColor="?attr/colorOnSecondary" />
 
             <TextView
                 android:id="@+id/tvDayPlusTwoMax"
@@ -113,7 +113,7 @@
                 android:layout_weight="1"
                 android:text="@string/max"
                 android:textAlignment="center"
-                android:textColor="#000000"
+                android:textColor="?attr/colorOnSecondary"
                 android:textStyle="bold" />
 
             <TextView
@@ -122,7 +122,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textAlignment="center"
-                android:textColor="#000000" />
+                android:textColor="?attr/colorOnSecondary" />
         </LinearLayout>
 
         <LinearLayout
@@ -137,7 +137,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.9"
                 android:textAlignment="center"
-                android:textColor="#000000" />
+                android:textColor="?attr/colorOnSecondary" />
 
             <TextView
                 android:id="@+id/tvDayPlusThreeMin"
@@ -146,7 +146,7 @@
                 android:layout_weight="1"
                 android:text="@string/min"
                 android:textAlignment="center"
-                android:textColor="#000000"
+                android:textColor="?attr/colorOnSecondary"
                 android:textStyle="bold" />
 
             <TextView
@@ -155,7 +155,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textAlignment="center"
-                android:textColor="#000000" />
+                android:textColor="?attr/colorOnSecondary" />
 
             <TextView
                 android:id="@+id/tvDayPlusThreeMax"
@@ -164,7 +164,7 @@
                 android:layout_weight="1"
                 android:text="@string/max"
                 android:textAlignment="center"
-                android:textColor="#000000"
+                android:textColor="?attr/colorOnSecondary"
                 android:textStyle="bold" />
 
             <TextView
@@ -173,7 +173,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textAlignment="center"
-                android:textColor="#000000" />
+                android:textColor="?attr/colorOnSecondary" />
         </LinearLayout>
 
         <LinearLayout
@@ -188,7 +188,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.9"
                 android:textAlignment="center"
-                android:textColor="#000000" />
+                android:textColor="?attr/colorOnSecondary" />
 
             <TextView
                 android:id="@+id/tvDayPlusFourMin"
@@ -197,7 +197,7 @@
                 android:layout_weight="1"
                 android:text="@string/min"
                 android:textAlignment="center"
-                android:textColor="#000000"
+                android:textColor="?attr/colorOnSecondary"
                 android:textStyle="bold" />
 
             <TextView
@@ -206,7 +206,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textAlignment="center"
-                android:textColor="#000000" />
+                android:textColor="?attr/colorOnSecondary" />
 
             <TextView
                 android:id="@+id/tvDayPlusFourMax"
@@ -215,7 +215,7 @@
                 android:layout_weight="1"
                 android:text="@string/max"
                 android:textAlignment="center"
-                android:textColor="#000000"
+                android:textColor="?attr/colorOnSecondary"
                 android:textStyle="bold" />
 
             <TextView
@@ -224,7 +224,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textAlignment="center"
-                android:textColor="#000000" />
+                android:textColor="?attr/colorOnSecondary" />
         </LinearLayout>
     </LinearLayout>
 

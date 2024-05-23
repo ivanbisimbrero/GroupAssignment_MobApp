@@ -15,7 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAlignment="center"
-            android:textColor="#000000"
+            android:textColor="?attr/colorOnSecondary"
             android:textSize="16sp"
             android:textStyle="bold" />
     </TableRow>
@@ -30,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAlignment="center"
-            android:textColor="#000000"
+            android:textColor="?attr/colorOnSecondary"
             android:textSize="60sp" />
     </TableRow>
 
@@ -56,7 +56,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAlignment="center"
-            android:textColor="#000000" />
+            android:textColor="?attr/colorOnSecondary" />
     </TableRow>
 
     <TableRow
@@ -78,7 +78,7 @@
                 android:layout_weight="1"
                 android:text="@string/min"
                 android:textAlignment="center"
-                android:textColor="#000000"
+                android:textColor="?attr/colorOnSecondary"
                 android:textStyle="bold" />
 
             <TextView
@@ -87,7 +87,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textAlignment="center"
-                android:textColor="#000000"
+                android:textColor="?attr/colorOnSecondary"
                 android:textStyle="bold" />
 
             <TextView
@@ -97,7 +97,7 @@
                 android:layout_weight="1"
                 android:text="@string/max"
                 android:textAlignment="center"
-                android:textColor="#000000"
+                android:textColor="?attr/colorOnSecondary"
                 android:textStyle="bold" />
 
             <TextView
@@ -106,7 +106,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textAlignment="center"
-                android:textColor="#000000"
+                android:textColor="?attr/colorOnSecondary"
                 android:textStyle="bold" />
         </LinearLayout>
 

@@ -31,7 +31,7 @@
             android:layout_weight="1"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:textColor="@color/white"
+            android:textColor="?attr/colorOnPrimary"
             android:gravity="start"
             android:layout_marginEnd="8dp" />
 
@@ -39,7 +39,7 @@
             android:id="@+id/tvMessageHour"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
+            android:textColor="?attr/colorOnPrimary"
             android:textSize="12sp"
             android:gravity="end" />
     </LinearLayout>
@@ -50,7 +50,7 @@
         android:layout_height="wrap_content"
         android:paddingTop="4dp"
         android:textSize="14sp"
-        android:textColor="@color/white"
+        android:textColor="?attr/colorOnPrimary"
         android:gravity="end"/>
     </LinearLayout>
 </LinearLayout>

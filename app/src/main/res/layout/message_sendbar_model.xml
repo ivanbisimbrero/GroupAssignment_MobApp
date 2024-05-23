@@ -16,7 +16,7 @@
         android:inputType="textMultiLine"
         android:minHeight="48dp"
         android:background="@drawable/rounded_bg"
-        android:backgroundTint="@color/iosBlue"
+        android:backgroundTint="?attr/colorPrimary"
         android:maxLines="3"
         android:scrollbars="vertical"/>
 
