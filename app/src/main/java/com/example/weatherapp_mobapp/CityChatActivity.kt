@@ -71,14 +71,14 @@ class CityChatActivity : AppCompatActivity() {
         })
 
         //Setup the buttons
-        view.chat.btnSend.setOnClickListener {
-            if(view.chat.etMessages.text.toString().isNotEmpty() && !haveEmptyUsernameAndEmail()) run {
+        view.sendMessage.btnSend.setOnClickListener {
+            if(view.sendMessage.etMessages.text.toString().isNotEmpty() && !haveEmptyUsernameAndEmail()) run {
                 val currentDate = sdf.format(Date())
                 println(currentDate)
                 val newMessageKey = dbReference.push().key!!
                 val message = Message(
                     newMessageKey ,DataUtils.mainUser.name, DataUtils.mainUser.email,
-                    view.chat.etMessages.text.toString(), currentDate, false
+                    view.sendMessage.etMessages.text.toString(), currentDate, false
                 )
                 //We first push it to the db, with the message key that we have obtained from the db
                 dbReference.child(newMessageKey).setValue(message)
@@ -86,7 +86,7 @@ class CityChatActivity : AppCompatActivity() {
                 message.isCurrentUser = true
                 //And finally, we add it to our adapter
                 messageAdapter.insertNewMessage(message)
-                view.chat.etMessages.setText("")
+                view.sendMessage.etMessages.setText("")
             } else {
                 Toast.makeText(this, "Please, set up an email and username", Toast.LENGTH_SHORT).show()
             }
