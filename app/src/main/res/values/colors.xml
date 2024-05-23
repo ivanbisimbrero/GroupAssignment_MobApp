@@ -5,6 +5,6 @@
     <color name="iosBlue">#007AFF</color>
     <color name="light_grey">#F2F2F2</color>
     <color name="grey">#C7C7CC</color>
-    <color name="inverted_iosBlue">#FF8052</color>
+    <color name="darker_iosBlue">#0066CC</color>
     <color name="inverted_grey">#FF8E8E93</color>
 </resources>

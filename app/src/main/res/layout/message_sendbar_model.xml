@@ -32,8 +32,7 @@
         android:minHeight="48dp"
         android:padding="4dp"
         android:layout_margin="6dp"
-        android:src="@drawable/send_icon"
-        app:tint="?attr/colorOnPrimary"/>
+        android:src="@drawable/send_icon" />
 
     <ImageButton
         android:id="@+id/btnAttach"

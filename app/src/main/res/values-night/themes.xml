@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.WeatherAPP_MobAPP" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your dark theme here. -->
-        <item name="colorPrimary">@color/inverted_iosBlue</item>
+        <item name="colorPrimary">@color/darker_iosBlue</item>
         <item name="colorOnPrimary">@color/black</item>
         <item name="colorSecondary">@color/inverted_grey</item>
         <item name="colorOnSecondary">@color/white</item>
