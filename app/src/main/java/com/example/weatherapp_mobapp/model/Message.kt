@@ -6,6 +6,7 @@ data class Message(
     val email: String = "",
     val message: String = "",
     val hour: String = "",
-    var isCurrentUser: Boolean = false
+    var isCurrentUser: Boolean = false,
+    val isImage: Boolean = false
 )
 

@@ -1,13 +1,13 @@
 package com.example.weatherapp_mobapp
 
-import android.content.res.ColorStateList
+import android.content.Intent
 import android.graphics.Rect
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.view.ViewTreeObserver
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherapp_mobapp.adapter.MessageAdapter
@@ -18,18 +18,19 @@ import com.example.weatherapp_mobapp.sharedPreferences.SHARED_PREFERENCES_KEY_US
 import com.example.weatherapp_mobapp.sharedPreferences.SHARED_PREFERENCES_NAME
 import com.example.weatherapp_mobapp.sharedPreferences.SharedPreferencesRepository
 import com.example.weatherapp_mobapp.utils.DataUtils
-import com.google.firebase.Firebase
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.database
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.storage.FirebaseStorage
 import java.text.SimpleDateFormat
 import java.util.Date
+import java.util.UUID
 
-class CityChatActivity : BaseCommunityActivity() {
+class CityChatActivity : AppCompatActivity() {
     private val view by lazy { ActivityCityChatBinding.inflate(layoutInflater) }
-    private val database = Firebase.database("https://grouptask-mobapp-default-rtdb.europe-west1.firebasedatabase.app/")
+    private val database = FirebaseDatabase.getInstance("https://grouptask-mobapp-default-rtdb.europe-west1.firebasedatabase.app/")
     private lateinit var dbReference: DatabaseReference
     private lateinit var messageAdapter: MessageAdapter
     private var isEditing = false
@@ -43,6 +44,8 @@ class CityChatActivity : BaseCommunityActivity() {
             ), SHARED_PREFERENCES_KEY_USER
         )
     }
+    private val REQUEST_CODE_IMAGE_PICK = 1001
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(view.root)
@@ -98,12 +101,11 @@ class CityChatActivity : BaseCommunityActivity() {
         view.sendMessage.btnSend.setOnClickListener {
             if(haveEmptyUsernameOrEmail()) {
                 Toast.makeText(this, "Please, set up an email and username", Toast.LENGTH_SHORT).show()
-            } else if(view.sendMessage.etMessages.text.toString().isNotEmpty()) run {
+            } else if(view.sendMessage.etMessages.text.toString().isNotEmpty()) {
                 val currentDate = sdf.format(Date())
-                println(currentDate)
                 val newMessageKey = dbReference.push().key!!
                 val message = Message(
-                    newMessageKey ,DataUtils.mainUser.name, DataUtils.mainUser.email,
+                    newMessageKey, DataUtils.mainUser.name, DataUtils.mainUser.email,
                     view.sendMessage.etMessages.text.toString(), currentDate, false
                 )
                 //We first push it to the db, with the message key that we have obtained from the db
@@ -115,11 +117,16 @@ class CityChatActivity : BaseCommunityActivity() {
                 view.sendMessage.etMessages.setText("")
             }
         }
+        view.sendMessage.btnAttach.setOnClickListener {
+            val intent = Intent(Intent.ACTION_PICK)
+            intent.type = "image/*"
+            startActivityForResult(intent, REQUEST_CODE_IMAGE_PICK)
+        }
         view.chat.btnChange.setOnClickListener {
-            //Check if the fields contains ; that is a ilegal character
+            //Check if the fields contains ; that is a illegal character
             if(view.chat.etChatEmail.text.toString().contains(";") ||
                 view.chat.etChatUsername.text.toString().contains(";")) {
-                Toast.makeText(this, "Ilegal character -> ;. Remove it!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Illegal character -> ;. Remove it!", Toast.LENGTH_SHORT).show()
                 isEditing = false
             }
             if (isEditing) {
@@ -165,7 +172,7 @@ class CityChatActivity : BaseCommunityActivity() {
                 val message = snapshot.getValue(Message::class.java)
                 if (message != null && message.id.isNotEmpty() &&
                     messageAdapter.messageList.none { it.id == message.id }) {
-                    //If the hour of the message is greather than the initHour, we add the message
+                    //If the hour of the message is greater than the initHour, we add the message
                     if(message.hour > currentInitDate) {
                         messageAdapter.insertNewMessage(message)
                     }
@@ -177,12 +184,42 @@ class CityChatActivity : BaseCommunityActivity() {
             override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {}
             override fun onCancelled(error: DatabaseError) {}
         })
-
     }
 
-    override fun onResume() {
-        super.onResume()
-        currentInitDate = sdf.format(Date())
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_CODE_IMAGE_PICK && resultCode == RESULT_OK && data != null) {
+            val imageUri = data.data
+            println(imageUri)
+            if (imageUri != null) {
+                uploadImageToFirebase(imageUri)
+            }
+        }
+    }
+
+    private fun uploadImageToFirebase(imageUri: Uri) {
+        val storageReference = FirebaseStorage.getInstance().reference.child("images/${UUID.randomUUID()}")
+        storageReference.putFile(imageUri).addOnSuccessListener {
+            storageReference.downloadUrl.addOnSuccessListener { uri ->
+                saveImageMessage(uri.toString())
+            }.addOnFailureListener {
+                Toast.makeText(this, "Failed to get image url", Toast.LENGTH_SHORT).show()
+            }
+        }.addOnFailureListener {
+            Toast.makeText(this, "Failed to upload image", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun saveImageMessage(imageUrl: String) {
+        val currentDate = sdf.format(Date())
+        val newMessageKey = dbReference.push().key!!
+        val message = Message(
+            newMessageKey, DataUtils.mainUser.name, DataUtils.mainUser.email,
+            imageUrl, currentDate, false, isImage = true
+        )
+        dbReference.child(newMessageKey).setValue(message)
+        message.isCurrentUser = true
+        messageAdapter.insertNewMessage(message)
     }
 
     private fun haveEmptyUsernameOrEmail(): Boolean {
