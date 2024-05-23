@@ -62,7 +62,9 @@ class CityPostedComments : BaseCommunityActivity() {
         view.comments.etChatEmail.setText(DataUtils.mainUser.email)
 
         //Setup the comment adapter
-        commentAdapter = CommentAdapter(mutableListOf())
+        commentAdapter = CommentAdapter(mutableListOf()) { comment ->
+            deleteComment(comment)
+        }
         view.comments.rvChatMessages.adapter = commentAdapter
         view.comments.rvChatMessages.layoutManager = LinearLayoutManager(this)
         commentAdapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
@@ -103,7 +105,10 @@ class CityPostedComments : BaseCommunityActivity() {
 
         //Setup the buttons
         view.sendComment.btnPostComment.setOnClickListener {
-            if(view.sendComment.etComments.text.toString().isNotEmpty() && !haveEmptyUsernameAndEmail()) run {
+            if(haveEmptyUsernameOrEmail()) {
+                Toast.makeText(this, "Please, set up an email and username", Toast.LENGTH_SHORT)
+                    .show()
+            } else if(view.sendComment.etComments.text.toString().isNotEmpty()) run {
                 val currentDate = sdf.format(Date())
                 println(currentDate)
                 val newMessageKey = dbReference.push().key!!
@@ -118,8 +123,6 @@ class CityPostedComments : BaseCommunityActivity() {
                 //And finally, we add it to our adapter
                 commentAdapter.insertNewComment(comment)
                 view.sendComment.etComments.setText("")
-            } else {
-                Toast.makeText(this, "Please, set up an email and username", Toast.LENGTH_SHORT).show()
             }
         }
         view.comments.btnChange.setOnClickListener {
@@ -179,7 +182,12 @@ class CityPostedComments : BaseCommunityActivity() {
             }
 
             override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {}
-            override fun onChildRemoved(snapshot: DataSnapshot) {}
+            override fun onChildRemoved(snapshot: DataSnapshot) {
+                val comment = snapshot.getValue(Comment::class.java)
+                if (comment != null) {
+                    commentAdapter.removeComment(comment)
+                }
+            }
             override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {}
             override fun onCancelled(error: DatabaseError) {}
         })
@@ -191,7 +199,17 @@ class CityPostedComments : BaseCommunityActivity() {
         currentInitDate = sdf.format(Date())
     }
 
-    private fun haveEmptyUsernameAndEmail(): Boolean {
-        return DataUtils.mainUser.name.isEmpty() && DataUtils.mainUser.email.isEmpty()
+    private fun haveEmptyUsernameOrEmail(): Boolean {
+        return DataUtils.mainUser.name.isEmpty() || DataUtils.mainUser.email.isEmpty()
+    }
+
+    private fun deleteComment(comment: Comment) {
+        dbReference.child(comment.id).removeValue().addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                commentAdapter.removeComment(comment)
+            } else {
+                Toast.makeText(this, "Error deleting comment", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 }

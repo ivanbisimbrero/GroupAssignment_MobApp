@@ -96,7 +96,9 @@ class CityChatActivity : BaseCommunityActivity() {
 
         //Setup the buttons
         view.sendMessage.btnSend.setOnClickListener {
-            if(view.sendMessage.etMessages.text.toString().isNotEmpty() && !haveEmptyUsernameAndEmail()) run {
+            if(haveEmptyUsernameOrEmail()) {
+                Toast.makeText(this, "Please, set up an email and username", Toast.LENGTH_SHORT).show()
+            } else if(view.sendMessage.etMessages.text.toString().isNotEmpty()) run {
                 val currentDate = sdf.format(Date())
                 println(currentDate)
                 val newMessageKey = dbReference.push().key!!
@@ -111,8 +113,6 @@ class CityChatActivity : BaseCommunityActivity() {
                 //And finally, we add it to our adapter
                 messageAdapter.insertNewMessage(message)
                 view.sendMessage.etMessages.setText("")
-            } else {
-                Toast.makeText(this, "Please, set up an email and username", Toast.LENGTH_SHORT).show()
             }
         }
         view.chat.btnChange.setOnClickListener {
@@ -181,7 +181,7 @@ class CityChatActivity : BaseCommunityActivity() {
         currentInitDate = sdf.format(Date())
     }
 
-    private fun haveEmptyUsernameAndEmail(): Boolean {
-        return DataUtils.mainUser.name.isEmpty() && DataUtils.mainUser.email.isEmpty()
+    private fun haveEmptyUsernameOrEmail(): Boolean {
+        return DataUtils.mainUser.name.isEmpty() || DataUtils.mainUser.email.isEmpty()
     }
 }
