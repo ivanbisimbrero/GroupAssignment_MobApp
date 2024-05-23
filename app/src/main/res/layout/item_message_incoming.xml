@@ -30,7 +30,7 @@
                     android:layout_weight="1"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:textColor="?attr/colorOnSecondary"
+                    android:textColor="?attr/colorOnPrimary"
                     android:gravity="start"
                     android:layout_marginEnd="8dp" />
 

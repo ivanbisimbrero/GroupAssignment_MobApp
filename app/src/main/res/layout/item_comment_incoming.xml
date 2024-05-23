@@ -18,6 +18,7 @@
             android:layout_weight="1"
             android:textSize="16sp"
             android:textStyle="bold"
+            android:textColor="?attr/colorOnSecondary"
             android:gravity="start" />
 
         <TextView

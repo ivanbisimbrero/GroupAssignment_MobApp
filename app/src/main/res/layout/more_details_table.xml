@@ -12,9 +12,9 @@
         android:layout_marginBottom="2dp"
         android:text="@string/more_weather_information"
         android:textAlignment="center"
-        android:textColor="#000000"
         android:textSize="16sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:textColor="?attr/colorOnSecondary"/>
 
     <TableLayout
         android:layout_width="match_parent"
@@ -32,8 +32,8 @@
                 android:layout_weight="1"
                 android:text="@string/feels_like"
                 android:textAlignment="textStart"
-                android:textColor="?attr/colorOnSecondary"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textColor="?attr/colorOnSecondary"/>
 
             <TextView
                 android:id="@+id/tvFeelLikeValue"
@@ -55,8 +55,8 @@
                 android:layout_weight="1"
                 android:text="@string/humidity"
                 android:textAlignment="textStart"
-                android:textColor="?attr/colorOnSecondary"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textColor="?attr/colorOnSecondary"/>
 
             <TextView
                 android:id="@+id/tvHumidityValue"
@@ -78,8 +78,8 @@
                 android:layout_weight="1"
                 android:text="@string/rain_probability"
                 android:textAlignment="textStart"
-                android:textColor="?attr/colorOnSecondary"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textColor="?attr/colorOnSecondary"/>
 
             <TextView
                 android:id="@+id/tvRainProbValue"
@@ -101,8 +101,8 @@
                 android:layout_weight="1"
                 android:text="@string/wind_speed"
                 android:textAlignment="textStart"
-                android:textColor="?attr/colorOnSecondary"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textColor="?attr/colorOnSecondary"/>
 
             <TextView
                 android:id="@+id/tvWindSpeedValue"
