@@ -8,12 +8,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherapp_mobapp.R
 import com.example.weatherapp_mobapp.model.Comment
 import com.example.weatherapp_mobapp.model.Message
+import com.example.weatherapp_mobapp.sharedPreferences.CrudAPI
 
-class CommentAdapter(val commentsList: MutableList<Comment>):
+class CommentAdapter(val commentsList: MutableList<Comment>, private var repository: CrudAPI):
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val VIEW_TYPE_OUTGOING = 1
     private val VIEW_TYPE_INCOMING = 2
+
+    init {
+        //commentsList.addAll(repository.list())
+    }
 
     class OutgoingCommentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val tvCommentUsername: TextView = itemView.findViewById(R.id.tvCommentUsername)

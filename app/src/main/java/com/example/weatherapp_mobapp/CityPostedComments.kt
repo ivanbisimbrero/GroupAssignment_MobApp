@@ -17,6 +17,10 @@ import com.example.weatherapp_mobapp.databinding.ActivityA5CityDetailBinding
 import com.example.weatherapp_mobapp.databinding.ActivityCityPostedCommentsBinding
 import com.example.weatherapp_mobapp.model.Comment
 import com.example.weatherapp_mobapp.model.Message
+import com.example.weatherapp_mobapp.sharedPreferences.CrudAPI
+import com.example.weatherapp_mobapp.sharedPreferences.SHARED_PREFERENCES_KEY_COMMENTS
+import com.example.weatherapp_mobapp.sharedPreferences.SHARED_PREFERENCES_NAME
+import com.example.weatherapp_mobapp.sharedPreferences.SharedPreferencesRepository
 import com.example.weatherapp_mobapp.utils.DataUtils
 import com.google.firebase.Firebase
 import com.google.firebase.database.ChildEventListener
@@ -34,6 +38,14 @@ class CityPostedComments : AppCompatActivity() {
     private lateinit var commentAdapter: CommentAdapter
     private var isEditing = false
     private val sdf = SimpleDateFormat("dd-MM-yyyy HH:mm:ss")
+    private val repository: CrudAPI by lazy {
+        SharedPreferencesRepository(
+            application.getSharedPreferences(
+                SHARED_PREFERENCES_NAME,
+                MODE_PRIVATE
+            ), SHARED_PREFERENCES_KEY_COMMENTS
+        )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,7 +59,7 @@ class CityPostedComments : AppCompatActivity() {
         view.comments.etChatEmail.setText(DataUtils.mainUser.email)
 
         //Setup the message adapter
-        commentAdapter = CommentAdapter(mutableListOf())
+        commentAdapter = CommentAdapter(mutableListOf(),repository)
         view.comments.rvChatMessages.adapter = commentAdapter
         view.comments.rvChatMessages.layoutManager = LinearLayoutManager(this)
         commentAdapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
@@ -92,6 +104,7 @@ class CityPostedComments : AppCompatActivity() {
                 comment.isCurrentUser = true
                 //And finally, we add it to our adapter
                 commentAdapter.insertNewComment(comment)
+                repository.save(cityName+"_"+comment) //!!!!!!!!!!!!!!!GUARDO MAL CREO!!!!!!!!!!!!!!
                 view.sendComment.etComments.setText("")
             } else {
                 Toast.makeText(this, "Please, set up an email and username", Toast.LENGTH_SHORT).show()
