@@ -4,7 +4,7 @@ data class Comment(
     val id: String = "",
     val username: String = "",
     val email: String = "",
-    val content: String = "",
-    val timestamp: String = "",
+    val message: String = "",
+    val hour: String = "",
     var isCurrentUser: Boolean = false
 )

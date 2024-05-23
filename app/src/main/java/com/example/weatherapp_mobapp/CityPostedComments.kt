@@ -31,35 +31,27 @@ import com.google.firebase.database.database
 import java.text.SimpleDateFormat
 import java.util.Date
 
-class CityPostedComments : AppCompatActivity() {
+class CityPostedComments : BaseCommunityActivity() {
     private val view by lazy { ActivityCityPostedCommentsBinding.inflate(layoutInflater) }
     private val database = Firebase.database("https://grouptask-mobapp-default-rtdb.europe-west1.firebasedatabase.app/")
     private lateinit var dbReference: DatabaseReference
     private lateinit var commentAdapter: CommentAdapter
     private var isEditing = false
     private val sdf = SimpleDateFormat("dd-MM-yyyy HH:mm:ss")
-    private val repository: CrudAPI by lazy {
-        SharedPreferencesRepository(
-            application.getSharedPreferences(
-                SHARED_PREFERENCES_NAME,
-                MODE_PRIVATE
-            ), SHARED_PREFERENCES_KEY_COMMENTS
-        )
-    }
-
+    private var currentInitDate = sdf.format(Date())
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(view.root)
         //Setup database reference
         val cityName = intent.getStringExtra("cityName")!!
-        dbReference = database.getReference(cityName)
+        dbReference = database.getReference("Comments_${cityName}")
 
         //Setup variable text from the layout
         view.comments.etChatUsername.setText(DataUtils.mainUser.name)
         view.comments.etChatEmail.setText(DataUtils.mainUser.email)
 
-        //Setup the message adapter
-        commentAdapter = CommentAdapter(mutableListOf(),repository)
+        //Setup the comment adapter
+        commentAdapter = CommentAdapter(mutableListOf())
         view.comments.rvChatMessages.adapter = commentAdapter
         view.comments.rvChatMessages.layoutManager = LinearLayoutManager(this)
         commentAdapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
@@ -68,6 +60,16 @@ class CityPostedComments : AppCompatActivity() {
                 view.comments.rvChatMessages.layoutManager!!.scrollToPosition(commentAdapter.itemCount - 1)
             }
         })
+
+        // Change the button text
+        if (DataUtils.mainUser.name.isEmpty() && DataUtils.mainUser.email.isEmpty()){
+            view.comments.btnChange.text = "Login"
+        } else {
+            view.comments.btnChange.text = "Change"
+            // Set the visibility of the EditText fields to GONE
+            view.comments.etChatUsername.visibility = View.GONE
+            view.comments.etChatEmail.visibility = View.GONE
+        }
 
         val rootView = findViewById<View>(android.R.id.content)
         rootView.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
@@ -104,7 +106,6 @@ class CityPostedComments : AppCompatActivity() {
                 comment.isCurrentUser = true
                 //And finally, we add it to our adapter
                 commentAdapter.insertNewComment(comment)
-                repository.save(cityName+"_"+comment) //!!!!!!!!!!!!!!!GUARDO MAL CREO!!!!!!!!!!!!!!
                 view.sendComment.etComments.setText("")
             } else {
                 Toast.makeText(this, "Please, set up an email and username", Toast.LENGTH_SHORT).show()
@@ -117,7 +118,17 @@ class CityPostedComments : AppCompatActivity() {
                 DataUtils.mainUser.email = view.comments.etChatEmail.text.toString()
                 view.comments.etChatUsername.isEnabled = false
                 view.comments.etChatEmail.isEnabled = false
-                view.comments.btnChange.text = "Change"
+
+                // Set the visibility of the EditText fields to GONE
+                view.comments.etChatUsername.visibility = View.GONE
+                view.comments.etChatEmail.visibility = View.GONE
+
+                // Change the button text
+                if (DataUtils.mainUser.name.isEmpty() && DataUtils.mainUser.email.isEmpty()){
+                    view.comments.btnChange.text = "Login"
+                } else {
+                    view.comments.btnChange.text = "Change"
+                }
             } else {
                 // Enable edit text
                 view.comments.etChatUsername.isEnabled = true
@@ -125,6 +136,10 @@ class CityPostedComments : AppCompatActivity() {
                 view.comments.etChatUsername.setText(DataUtils.mainUser.name)
                 view.comments.etChatEmail.setText(DataUtils.mainUser.email)
                 view.comments.btnChange.text = "Set"
+
+                // Set the visibility of the EditText fields to VISIBLE
+                view.comments.etChatUsername.visibility = View.VISIBLE
+                view.comments.etChatEmail.visibility = View.VISIBLE
             }
             isEditing = !isEditing
         }
@@ -133,10 +148,14 @@ class CityPostedComments : AppCompatActivity() {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
                 val comment = snapshot.getValue(Comment::class.java)
                 //Check if the email is the same as the user one and that the comment isn't yet in the adapter
-                if(comment!!.email == DataUtils.mainUser.email &&
-                    commentAdapter.commentsList.none { it.id == comment.id }) {
-                    comment.isCurrentUser = true
-                    commentAdapter.insertNewComment(comment)
+                if(commentAdapter.commentsList.none { it.id == comment!!.id }){
+                    if(comment!!.email == DataUtils.mainUser.email) {
+                        comment.isCurrentUser = true
+                        commentAdapter.insertNewComment(comment)
+                    } else {
+                        comment.isCurrentUser = false
+                        commentAdapter.insertNewComment(comment)
+                    }
                 }
             }
 
@@ -146,6 +165,11 @@ class CityPostedComments : AppCompatActivity() {
             override fun onCancelled(error: DatabaseError) {}
         })
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        currentInitDate = sdf.format(Date())
     }
 
     private fun haveEmptyUsernameAndEmail(): Boolean {

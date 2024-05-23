@@ -23,7 +23,7 @@ import com.google.firebase.database.database
 import java.text.SimpleDateFormat
 import java.util.Date
 
-class CityChatActivity : AppCompatActivity() {
+class CityChatActivity : BaseCommunityActivity() {
     private val view by lazy { ActivityCityChatBinding.inflate(layoutInflater) }
     private val database = Firebase.database("https://grouptask-mobapp-default-rtdb.europe-west1.firebasedatabase.app/")
     private lateinit var dbReference: DatabaseReference
@@ -128,7 +128,6 @@ class CityChatActivity : AppCompatActivity() {
                 view.chat.etChatUsername.setText(DataUtils.mainUser.name)
                 view.chat.etChatEmail.setText(DataUtils.mainUser.email)
                 view.chat.btnChange.text = "Set"
-                //view.chat.etChatEmail.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.iosBlue))
 
                 // Set the visibility of the EditText fields to VISIBLE
                 view.chat.etChatUsername.visibility = View.VISIBLE
@@ -140,7 +139,8 @@ class CityChatActivity : AppCompatActivity() {
         dbReference.addChildEventListener(object : ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
                 val message = snapshot.getValue(Message::class.java)
-                if (message != null && message.id.isNotEmpty() && messageAdapter.messageList.none { it.id == message.id }) {
+                if (message != null && message.id.isNotEmpty() &&
+                    messageAdapter.messageList.none { it.id == message.id }) {
                     //If the hour of the message is greather than the initHour, we add the message
                     if(message.hour > currentInitDate) {
                         messageAdapter.insertNewMessage(message)

@@ -19,6 +19,9 @@
         android:theme="@style/Theme.WeatherAPP_MobAPP"
         tools:targetApi="31">
         <activity
+            android:name=".BaseCommunityActivity"
+            android:exported="false" />
+        <activity
             android:name=".CityPostedComments"
             android:exported="false" />
         <activity

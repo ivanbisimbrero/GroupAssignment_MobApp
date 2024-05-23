@@ -10,7 +10,7 @@ import com.example.weatherapp_mobapp.model.Comment
 import com.example.weatherapp_mobapp.model.Message
 import com.example.weatherapp_mobapp.sharedPreferences.CrudAPI
 
-class CommentAdapter(val commentsList: MutableList<Comment>, private var repository: CrudAPI):
+class CommentAdapter(val commentsList: MutableList<Comment>):
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val VIEW_TYPE_OUTGOING = 1
@@ -43,10 +43,10 @@ class CommentAdapter(val commentsList: MutableList<Comment>, private var reposit
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == VIEW_TYPE_OUTGOING) {
             val view = LayoutInflater.from(parent.context).inflate(R.layout.item_comment_outgoing, parent, false)
-            CommentAdapter.OutgoingCommentViewHolder(view)
+            OutgoingCommentViewHolder(view)
         } else {
             val view = LayoutInflater.from(parent.context).inflate(R.layout.item_comment_incoming, parent, false)
-            CommentAdapter.IncomingCommentViewHolder(view)
+            IncomingCommentViewHolder(view)
         }
     }
 
@@ -54,12 +54,12 @@ class CommentAdapter(val commentsList: MutableList<Comment>, private var reposit
         val currentComment = commentsList[position]
         if (holder is OutgoingCommentViewHolder) {
             holder.tvCommentUsername.text = currentComment.username
-            holder.tvCommentTimestamp.text = currentComment.timestamp.substring(0, currentComment.timestamp.length - 3) //Pick up only the date and the hh:mm
-            holder.tvCommentContent.text = currentComment.content
+            holder.tvCommentTimestamp.text = currentComment.hour.substring(0, currentComment.hour.length - 3) //Pick up only the date and the hh:mm
+            holder.tvCommentContent.text = currentComment.message
         } else if (holder is IncomingCommentViewHolder) {
             holder.tvCommentUsername.text = currentComment.username
-            holder.tvCommentTimestamp.text = currentComment.timestamp.substring(0, currentComment.timestamp.length - 3)
-            holder.tvCommentContent.text = currentComment.content
+            holder.tvCommentTimestamp.text = currentComment.hour.substring(0, currentComment.hour.length - 3)
+            holder.tvCommentContent.text = currentComment.message
         }
     }
 
