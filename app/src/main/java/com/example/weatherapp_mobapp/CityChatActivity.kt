@@ -1,11 +1,13 @@
 package com.example.weatherapp_mobapp
 
+import android.content.res.ColorStateList
 import android.graphics.Rect
 import android.os.Bundle
 import android.view.View
 import android.view.ViewTreeObserver
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherapp_mobapp.adapter.MessageAdapter
@@ -126,6 +128,7 @@ class CityChatActivity : AppCompatActivity() {
                 view.chat.etChatUsername.setText(DataUtils.mainUser.name)
                 view.chat.etChatEmail.setText(DataUtils.mainUser.email)
                 view.chat.btnChange.text = "Set"
+                //view.chat.etChatEmail.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.iosBlue))
 
                 // Set the visibility of the EditText fields to VISIBLE
                 view.chat.etChatUsername.visibility = View.VISIBLE
