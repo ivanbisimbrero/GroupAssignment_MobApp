@@ -55,6 +55,7 @@ class CityPostedComments : BaseCommunityActivity() {
         setContentView(view.root)
         //Setup database reference
         val cityName = intent.getStringExtra("cityName")!!
+        view.comments.tvModelCityName.text = cityName
         dbReference = database.getReference("Comments_${cityName}")
 
         //Setup variable text from the layout

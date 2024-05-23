@@ -51,6 +51,7 @@ class CityChatActivity : AppCompatActivity() {
         setContentView(view.root)
         //Setup database reference
         val cityName = intent.getStringExtra("cityName")!!
+        view.chat.tvModelCityName.text = cityName
         dbReference = database.getReference(cityName)
 
         //Setup variable text from the layout
