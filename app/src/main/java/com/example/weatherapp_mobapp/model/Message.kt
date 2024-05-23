@@ -7,6 +7,5 @@ data class Message(
     val message: String = "",
     val hour: String = "",
     var isCurrentUser: Boolean = false,
-    val isImage: Boolean = false
+    val image: Boolean = false
 )
-

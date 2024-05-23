@@ -45,9 +45,9 @@ class MessageAdapter(val messageList: MutableList<Message>) :
     override fun getItemViewType(position: Int): Int {
         val message = messageList[position]
         return if (message.isCurrentUser) {
-            if (message.isImage) VIEW_TYPE_OUTGOING_IMAGE else VIEW_TYPE_OUTGOING
+            if (message.image) VIEW_TYPE_OUTGOING_IMAGE else VIEW_TYPE_OUTGOING
         } else {
-            if (message.isImage) VIEW_TYPE_INCOMING_IMAGE else VIEW_TYPE_INCOMING
+            if (message.image) VIEW_TYPE_INCOMING_IMAGE else VIEW_TYPE_INCOMING
         }
     }
 

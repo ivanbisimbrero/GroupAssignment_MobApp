@@ -215,7 +215,7 @@ class CityChatActivity : AppCompatActivity() {
         val newMessageKey = dbReference.push().key!!
         val message = Message(
             newMessageKey, DataUtils.mainUser.name, DataUtils.mainUser.email,
-            imageUrl, currentDate, false, isImage = true
+            imageUrl, currentDate, false, true
         )
         dbReference.child(newMessageKey).setValue(message)
         message.isCurrentUser = true
