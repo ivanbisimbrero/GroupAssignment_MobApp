@@ -51,6 +51,16 @@ class CityChatActivity : AppCompatActivity() {
             }
         })
 
+        // Change the button text
+        if (DataUtils.mainUser.name.isEmpty() && DataUtils.mainUser.email.isEmpty()){
+            view.chat.btnChange.text = "Login"
+        } else {
+            view.chat.btnChange.text = "Change"
+            // Set the visibility of the EditText fields to GONE
+            view.chat.etChatUsername.visibility = View.GONE
+            view.chat.etChatEmail.visibility = View.GONE
+        }
+
         val rootView = findViewById<View>(android.R.id.content)
         rootView.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
             override fun onGlobalLayout() {
@@ -98,7 +108,17 @@ class CityChatActivity : AppCompatActivity() {
                 DataUtils.mainUser.email = view.chat.etChatEmail.text.toString()
                 view.chat.etChatUsername.isEnabled = false
                 view.chat.etChatEmail.isEnabled = false
-                view.chat.btnChange.text = "Change"
+
+                // Set the visibility of the EditText fields to GONE
+                view.chat.etChatUsername.visibility = View.GONE
+                view.chat.etChatEmail.visibility = View.GONE
+
+                // Change the button text
+                if (DataUtils.mainUser.name.isEmpty() && DataUtils.mainUser.email.isEmpty()){
+                    view.chat.btnChange.text = "Login"
+                } else {
+                    view.chat.btnChange.text = "Change"
+                }
             } else {
                 // Enable edit text
                 view.chat.etChatUsername.isEnabled = true
@@ -106,6 +126,10 @@ class CityChatActivity : AppCompatActivity() {
                 view.chat.etChatUsername.setText(DataUtils.mainUser.name)
                 view.chat.etChatEmail.setText(DataUtils.mainUser.email)
                 view.chat.btnChange.text = "Set"
+
+                // Set the visibility of the EditText fields to VISIBLE
+                view.chat.etChatUsername.visibility = View.VISIBLE
+                view.chat.etChatEmail.visibility = View.VISIBLE
             }
             isEditing = !isEditing
         }
