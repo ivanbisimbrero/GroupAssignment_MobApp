@@ -2,6 +2,7 @@ package com.example.weatherapp_mobapp
 
 import android.graphics.Rect
 import android.os.Bundle
+import android.provider.ContactsContract.Data
 import android.view.View
 import android.view.ViewTreeObserver
 import android.widget.Toast
@@ -18,6 +19,7 @@ import com.example.weatherapp_mobapp.databinding.ActivityCityPostedCommentsBindi
 import com.example.weatherapp_mobapp.model.Comment
 import com.example.weatherapp_mobapp.model.Message
 import com.example.weatherapp_mobapp.sharedPreferences.CrudAPI
+import com.example.weatherapp_mobapp.sharedPreferences.SHARED_PREFERENCES_KEY
 import com.example.weatherapp_mobapp.sharedPreferences.SHARED_PREFERENCES_KEY_COMMENTS
 import com.example.weatherapp_mobapp.sharedPreferences.SHARED_PREFERENCES_NAME
 import com.example.weatherapp_mobapp.sharedPreferences.SharedPreferencesRepository
@@ -39,6 +41,15 @@ class CityPostedComments : BaseCommunityActivity() {
     private var isEditing = false
     private val sdf = SimpleDateFormat("dd-MM-yyyy HH:mm:ss")
     private var currentInitDate = sdf.format(Date())
+    private val repository: CrudAPI by lazy {
+        SharedPreferencesRepository(
+            application.getSharedPreferences(
+                SHARED_PREFERENCES_NAME,
+                MODE_PRIVATE
+            ), SHARED_PREFERENCES_KEY_COMMENTS
+        )
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(view.root)
@@ -119,6 +130,10 @@ class CityPostedComments : BaseCommunityActivity() {
                 view.comments.etChatUsername.isEnabled = false
                 view.comments.etChatEmail.isEnabled = false
 
+                //Saved user in shared preferences
+                repository.save(DataUtils.mainUser.name)
+                repository.save(DataUtils.mainUser.email)
+
                 // Set the visibility of the EditText fields to GONE
                 view.comments.etChatUsername.visibility = View.GONE
                 view.comments.etChatEmail.visibility = View.GONE
@@ -140,6 +155,10 @@ class CityPostedComments : BaseCommunityActivity() {
                 // Set the visibility of the EditText fields to VISIBLE
                 view.comments.etChatUsername.visibility = View.VISIBLE
                 view.comments.etChatEmail.visibility = View.VISIBLE
+
+                //Delete current user from sharedPreferences
+                repository.delete(DataUtils.mainUser.name)
+                repository.delete(DataUtils.mainUser.email)
             }
             isEditing = !isEditing
         }

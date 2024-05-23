@@ -14,6 +14,7 @@ import com.example.weatherapp_mobapp.databinding.ActivityA1SplashScreenBinding
 import com.example.weatherapp_mobapp.requestCity.CityCoordinatesRequest
 import com.example.weatherapp_mobapp.sharedPreferences.CrudAPI
 import com.example.weatherapp_mobapp.sharedPreferences.SHARED_PREFERENCES_KEY
+import com.example.weatherapp_mobapp.sharedPreferences.SHARED_PREFERENCES_KEY_COMMENTS
 import com.example.weatherapp_mobapp.sharedPreferences.SHARED_PREFERENCES_NAME
 import com.example.weatherapp_mobapp.sharedPreferences.SharedPreferencesRepository
 import com.example.weatherapp_mobapp.utils.DataUtils
@@ -35,6 +36,14 @@ class A1SplashScreen : AppCompatActivity() {
                 SHARED_PREFERENCES_NAME,
                 MODE_PRIVATE
             ), SHARED_PREFERENCES_KEY
+        )
+    }
+    private val repositoryComments: CrudAPI by lazy {
+        SharedPreferencesRepository(
+            application.getSharedPreferences(
+                SHARED_PREFERENCES_NAME,
+                MODE_PRIVATE
+            ), SHARED_PREFERENCES_KEY_COMMENTS
         )
     }
     private var dbHandler : DatabaseHelper = DatabaseHelper(this)
@@ -71,7 +80,7 @@ class A1SplashScreen : AppCompatActivity() {
                 defaultCityJobs.joinAll()
 
                 // Initialise main user
-                DataUtils.initUser()
+                DataUtils.initUser(repositoryComments)
 
                 //Load Favourites cities
                 DataUtils.loadFavoriteCities(repository)

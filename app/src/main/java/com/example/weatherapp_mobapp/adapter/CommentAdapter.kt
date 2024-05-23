@@ -16,10 +16,6 @@ class CommentAdapter(val commentsList: MutableList<Comment>):
     private val VIEW_TYPE_OUTGOING = 1
     private val VIEW_TYPE_INCOMING = 2
 
-    init {
-        //commentsList.addAll(repository.list())
-    }
-
     class OutgoingCommentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val tvCommentUsername: TextView = itemView.findViewById(R.id.tvCommentUsername)
         val tvCommentTimestamp: TextView = itemView.findViewById(R.id.tvCommentTimestamp)
