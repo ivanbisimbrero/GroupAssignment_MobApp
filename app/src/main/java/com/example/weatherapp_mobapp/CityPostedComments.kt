@@ -231,6 +231,8 @@ class CityPostedComments : AppCompatActivity() {
                 val comment = commentAdapter.commentsList[position]
                 if (comment.isCurrentUser){
                     deleteComment(comment)
+                    commentAdapter.notifyDataSetChanged()
+                    Toast.makeText(this@CityPostedComments, "Comment deleted", Toast.LENGTH_SHORT).show()
                 }else{
                     commentAdapter.notifyItemChanged(position)
                     Toast.makeText(this@CityPostedComments, "You can only delete your own comments", Toast.LENGTH_SHORT).show()

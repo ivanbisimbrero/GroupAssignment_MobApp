@@ -25,23 +25,31 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <ImageButton
+            <Button
                 android:id="@+id/btnCityChat"
-                android:layout_width="match_parent"
+                android:layout_width="340dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:contentDescription="City Chat"
-                android:src="@drawable/chat_icon"
+                android:text="@string/chat"
+                android:textColor="?attr/colorOnSecondary"
+                android:drawableLeft="@drawable/chat_icon"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
+                android:background="?attr/selectableItemBackground"
                 app:tint="?attr/colorOnSecondary"
                 tools:ignore="TouchTargetSizeCheck" />
 
-            <ImageButton
+            <Button
                 android:id="@+id/btnCityComments"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:contentDescription="City Comments"
-                android:src="@drawable/add_comment_icon"
+                android:text="@string/comments"
+                android:textColor="?attr/colorOnSecondary"
+                android:drawableLeft="@drawable/add_comment_icon"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
+                android:background="?attr/selectableItemBackground"
                 app:tint="?attr/colorOnSecondary"
                 tools:ignore="TouchTargetSizeCheck" />
 
