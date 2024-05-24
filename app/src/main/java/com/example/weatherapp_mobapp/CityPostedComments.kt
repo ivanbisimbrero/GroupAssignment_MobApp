@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewTreeObserver
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherapp_mobapp.adapter.CommentAdapter
@@ -24,6 +25,11 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.database
 import java.text.SimpleDateFormat
 import java.util.Date
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
+import androidx.core.content.ContextCompat
+
 
 class CityPostedComments : AppCompatActivity() {
     private val view by lazy { ActivityCityPostedCommentsBinding.inflate(layoutInflater) }
@@ -66,6 +72,55 @@ class CityPostedComments : AppCompatActivity() {
                 view.comments.rvChatMessages.layoutManager!!.scrollToPosition(commentAdapter.itemCount - 1)
             }
         })
+
+        // Setup swipe to delete
+        val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT ) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val position = viewHolder.adapterPosition
+                val comment = commentAdapter.commentsList[position]
+                if (comment.isCurrentUser){
+                    deleteComment(comment)
+                }else{
+                    commentAdapter.notifyDataSetChanged()
+                    Toast.makeText(this@CityPostedComments, "You can only delete your own comments", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onChildDraw(
+                c: Canvas,
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                dX: Float,
+                dY: Float,
+                actionState: Int,
+                isCurrentlyActive: Boolean
+            ) {
+                val itemView = viewHolder.itemView
+                val background = Paint().apply { color = Color.RED }
+
+                if  (dX < 0) { // Swiping to the left
+                    c.drawRect(
+                        itemView.right + dX,
+                        itemView.top.toFloat(),
+                        itemView.right.toFloat(),
+                        itemView.bottom.toFloat(),
+                        background
+                    )
+                }
+                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+            }
+        }
+        val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
+        itemTouchHelper.attachToRecyclerView(view.comments.rvChatMessages)
+
 
         // Change the button text
         if (DataUtils.mainUser.name.isEmpty() && DataUtils.mainUser.email.isEmpty()){
