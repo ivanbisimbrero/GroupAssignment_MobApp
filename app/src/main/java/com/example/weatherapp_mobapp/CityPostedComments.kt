@@ -199,6 +199,18 @@ class CityPostedComments : AppCompatActivity() {
                 } else {
                     view.comments.btnChange.text = "Change Username"
                 }
+
+                //Change the boolean inside the adapter
+                commentAdapter.commentsList.forEach {
+                    if(it.email == DataUtils.mainUser.email) {
+                        it.isCurrentUser = true
+                    } else {
+                        it.isCurrentUser = false
+                    }
+                }
+
+                //Check if is current user
+                commentAdapter.notifyDataSetChanged()
             } else {
                 // Enable edit text
                 view.comments.etChatUsername.isEnabled = true
@@ -213,6 +225,7 @@ class CityPostedComments : AppCompatActivity() {
 
                 //Delete current user from sharedPreferences
                 repository.delete(DataUtils.mainUser.name + ";" + DataUtils.mainUser.email)
+
             }
             isEditing = !isEditing
         }

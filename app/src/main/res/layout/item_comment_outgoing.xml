@@ -55,4 +55,10 @@
         android:paddingTop="4dp"
         android:textSize="14sp"
         android:gravity="start" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="8dp"
+        android:background="?attr/colorOnSecondary" />
 </LinearLayout>
