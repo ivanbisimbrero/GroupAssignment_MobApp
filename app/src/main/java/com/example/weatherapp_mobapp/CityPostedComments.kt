@@ -52,7 +52,7 @@ class CityPostedComments : AppCompatActivity() {
 
         //Setup database reference
         val cityName = intent.getStringExtra("cityName")!!
-        view.comments.tvModelCityName.text = cityName
+        view.comments.tvModelCityName.text = cityName.plus(" Comments")
         dbReference = database.getReference("Comments_${cityName}")
 
         //Setup variable text from the layout
