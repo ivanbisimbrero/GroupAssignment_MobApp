@@ -2,24 +2,16 @@ package com.example.weatherapp_mobapp
 
 import android.graphics.Rect
 import android.os.Bundle
-import android.provider.ContactsContract.Data
 import android.view.View
 import android.view.ViewTreeObserver
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherapp_mobapp.adapter.CommentAdapter
-import com.example.weatherapp_mobapp.adapter.MessageAdapter
-import com.example.weatherapp_mobapp.databinding.ActivityA5CityDetailBinding
 import com.example.weatherapp_mobapp.databinding.ActivityCityPostedCommentsBinding
 import com.example.weatherapp_mobapp.model.Comment
-import com.example.weatherapp_mobapp.model.Message
 import com.example.weatherapp_mobapp.sharedPreferences.CrudAPI
-import com.example.weatherapp_mobapp.sharedPreferences.SHARED_PREFERENCES_KEY
 import com.example.weatherapp_mobapp.sharedPreferences.SHARED_PREFERENCES_KEY_USER
 import com.example.weatherapp_mobapp.sharedPreferences.SHARED_PREFERENCES_NAME
 import com.example.weatherapp_mobapp.sharedPreferences.SharedPreferencesRepository
@@ -33,7 +25,7 @@ import com.google.firebase.database.database
 import java.text.SimpleDateFormat
 import java.util.Date
 
-class CityPostedComments : BaseCommunityActivity() {
+class CityPostedComments : AppCompatActivity() {
     private val view by lazy { ActivityCityPostedCommentsBinding.inflate(layoutInflater) }
     private val database = Firebase.database("https://grouptask-mobapp-default-rtdb.europe-west1.firebasedatabase.app/")
     private lateinit var dbReference: DatabaseReference
