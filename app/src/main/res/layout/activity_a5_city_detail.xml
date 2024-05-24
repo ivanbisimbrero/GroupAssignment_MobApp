@@ -20,13 +20,39 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <Switch
-            android:id="@+id/swchToggleFav"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:minHeight="48dp"
-            android:text="@string/favourite" />
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/btnCityChat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:contentDescription="City Chat"
+                android:src="@drawable/chat_icon"
+                app:tint="?attr/colorOnSecondary"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <ImageButton
+                android:id="@+id/btnCityComments"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:contentDescription="City Comments"
+                android:src="@drawable/add_comment_icon"
+                app:tint="?attr/colorOnSecondary"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <Switch
+                android:id="@+id/swchToggleFav"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:minHeight="48dp"
+                android:text="@string/favourite" />
+        </LinearLayout>
 
         <include
             android:id="@+id/tDetailWeather"
@@ -53,26 +79,11 @@
             <Button
                 android:id="@+id/btnHistoricalData"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/historical_data"
                 android:backgroundTint="?attr/colorSecondary"/>
 
-            <Button
-                android:id="@+id/btnCityChat"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="@string/chat"
-                android:backgroundTint="?attr/colorSecondary"/>
-
-            <Button
-                android:id="@+id/btnCityComments"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="@string/comments"
-                android:backgroundTint="?attr/colorSecondary"/>
         </LinearLayout>
 
     </LinearLayout>
